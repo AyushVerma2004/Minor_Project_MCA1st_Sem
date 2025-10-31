@@ -1,13 +1,193 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Start your Survey
-    </title>
-    <link rel="stylesheet" href="Survey.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Your Fitness Buddy — Survey</title>
+  <link rel="stylesheet" href="Survey.css" />
 </head>
 <body>
+  <div class="container">
+    <header>
+      <h1>Your Fitness Buddy — Quick Survey</h1>
+      <p class="lead">Answer these questions so we can generate your best workout plan.</p>
+    </header>
 
+    <form id="fitnessSurvey" class="card" autocomplete="on">
+      <!-- 1. Basic Information -->
+      <fieldset>
+        <legend>1. Basic Information</legend>
+
+        <label>What is your age group?</label>
+        <select name="age_group" required>
+          <option value="">Select</option>
+          <option>Under 18</option>
+          <option>18–25</option>
+          <option>26–35</option>
+          <option>36–45</option>
+          <option>46+</option>
+        </select>
+
+        <label>What is your gender?</label>
+        <select name="gender" required>
+          <option value="">Select</option>
+          <option>Male</option>
+          <option>Female</option>
+          <option>Non-binary / Prefer not to say</option>
+        </select>
+
+        <div class="two-col">
+          <div>
+            <label>Height</label>
+            <input type="number" name="height" placeholder="Height" required>
+          </div>
+          <div>
+            <label>Weight</label>
+            <input type="number" name="weight" placeholder="Weight" required>
+          </div>
+        </div>
+
+        <label>Current fitness level:</label>
+        <div class="options">
+          <label><input type="radio" name="fitness_level" value="Beginner"> Beginner</label>
+          <label><input type="radio" name="fitness_level" value="Intermediate"> Intermediate</label>
+          <label><input type="radio" name="fitness_level" value="Advanced"> Advanced</label>
+        </div>
+      </fieldset>
+
+      <!-- 2. Fitness Goals -->
+      <fieldset>
+        <legend>2. Fitness Goals</legend>
+
+        <label>Main fitness goal:</label>
+        <select name="goal" required>
+          <option value="">Select goal</option>
+          <option>Lose weight</option>
+          <option>Build muscle</option>
+          <option>Improve endurance</option>
+          <option>Get toned</option>
+          <option>Maintain health</option>
+          <option>Increase flexibility</option>
+        </select>
+
+        <label>How soon do you want results?</label>
+        <select name="result_time" required>
+          <option value="">Select</option>
+          <option>1–2 months (intensive)</option>
+          <option>3–6 months (balanced)</option>
+          <option>No rush (habit building)</option>
+        </select>
+      </fieldset>
+
+      <!-- 3. Lifestyle -->
+      <fieldset>
+        <legend>3. Lifestyle & Activity</legend>
+
+        <label>How active are you daily?</label>
+        <select name="activity" required>
+          <option value="">Select</option>
+          <option>Mostly sitting</option>
+          <option>Lightly active</option>
+          <option>Moderately active</option>
+          <option>Very active</option>
+        </select>
+
+        <label>Workout time available per day:</label>
+        <div class="options">
+          <label><input type="radio" name="workout_time" value="Under 30 min"> Under 30 min</label>
+          <label><input type="radio" name="workout_time" value="30–45 min"> 30–45 min</label>
+          <label><input type="radio" name="workout_time" value="1 hr"> 1 hr</label>
+          <label><input type="radio" name="workout_time" value="More than 1 hr"> More than 1 hr</label>
+        </div>
+
+        <label>Days you can work out:</label>
+        <div class="checkboxes">
+          <label><input type="checkbox" name="days" value="Mon">Mon</label>
+          <label><input type="checkbox" name="days" value="Tue">Tue</label>
+          <label><input type="checkbox" name="days" value="Wed">Wed</label>
+          <label><input type="checkbox" name="days" value="Thu">Thu</label>
+          <label><input type="checkbox" name="days" value="Fri">Fri</label>
+          <label><input type="checkbox" name="days" value="Sat">Sat</label>
+          <label><input type="checkbox" name="days" value="Sun">Sun</label>
+        </div>
+      </fieldset>
+
+      <!-- 4. Nutrition -->
+      <fieldset>
+        <legend>4. Nutrition & Habits</legend>
+
+        <label>Diet preference:</label>
+        <select name="diet" required>
+          <option value="">Select</option>
+          <option>Vegetarian</option>
+          <option>Non-vegetarian</option>
+          <option>Vegan</option>
+          <option>Eggetarian</option>
+          <option>No specific diet</option>
+        </select>
+
+        <label>Sleep quality:</label>
+        <div class="options">
+          <label><input type="radio" name="sleep" value="Poor"> Poor</label>
+          <label><input type="radio" name="sleep" value="Moderate"> Moderate</label>
+          <label><input type="radio" name="sleep" value="Good"> Good</label>
+        </div>
+
+        <label>Do you smoke or drink?</label>
+        <div class="options">
+          <label><input type="radio" name="habits" value="Both"> Both</label>
+          <label><input type="radio" name="habits" value="Only smoke"> Only smoke</label>
+          <label><input type="radio" name="habits" value="Only drink"> Only drink</label>
+          <label><input type="radio" name="habits" value="Neither"> Neither</label>
+        </div>
+      </fieldset>
+
+      <!-- 5. Exercise Preferences -->
+      <fieldset>
+        <legend>5. Exercise Preferences</legend>
+
+        <label>Preferred workout type:</label>
+        <div class="checkboxes">
+          <label><input type="checkbox" name="workout_pref" value="Gym"> Gym</label>
+          <label><input type="checkbox" name="workout_pref" value="Home"> Home workouts</label>
+          <label><input type="checkbox" name="workout_pref" value="Outdoor"> Outdoor</label>
+          <label><input type="checkbox" name="workout_pref" value="Yoga"> Yoga / Pilates</label>
+          <label><input type="checkbox" name="workout_pref" value="Sports"> Sports</label>
+        </div>
+
+        <label>Any injuries or limitations?</label>
+        <input type="text" name="injuries" placeholder="If yes, specify">
+      </fieldset>
+
+      <!-- 6. Motivation -->
+      <fieldset>
+        <legend>6. Motivation & Personality</legend>
+
+        <label>What motivates you the most?</label>
+        <select name="motivation">
+          <option>Visible results</option>
+          <option>Health improvements</option>
+          <option>Competing with friends</option>
+          <option>Stress relief</option>
+        </select>
+
+        <label>Do you prefer workouts:</label>
+        <div class="options">
+          <label><input type="radio" name="workout_mode" value="Alone"> Alone</label>
+          <label><input type="radio" name="workout_mode" value="With partner"> With partner</label>
+          <label><input type="radio" name="workout_mode" value="Group"> Group / class</label>
+        </div>
+
+        <label>How consistent are you?</label>
+        <select name="consistency">
+          <option>I struggle to stay consistent</option>
+          <option>I’m fairly regular</option>
+          <option>I never miss a session</option>
+        </select>
+      </fieldset>
+
+      <button type="submit" class="submit-btn">Submit Survey</button>
+    </form>
+  </div>
 </body>
 </html>
