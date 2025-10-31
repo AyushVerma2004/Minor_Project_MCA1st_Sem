@@ -1,0 +1,149 @@
+/* ---------- Base Styling ---------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: linear-gradient(180deg, #e3f2fd, #ffffff);
+  color: #1e293b;
+  padding: 30px 20px;
+}
+
+/* ---------- Container ---------- */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 1.8rem;
+  color: #0f172a;
+}
+
+.lead {
+  color: #64748b;
+  margin-top: 5px;
+  font-size: 0.95rem;
+}
+
+/* ---------- Card ---------- */
+.card {
+  background: #ffffff;
+  padding: 25px;
+  margin-top: 25px;
+  border-radius: 14px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* ---------- Fieldsets ---------- */
+fieldset {
+  border: none;
+  margin-bottom: 25px;
+}
+
+legend {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1e40af;
+  margin-bottom: 10px;
+}
+
+/* ---------- Labels & Inputs ---------- */
+label {
+  display: block;
+  font-size: 0.95rem;
+  margin: 12px 0 6px;
+  font-weight: 500;
+}
+
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  outline: none;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+/* ---------- Layouts ---------- */
+.two-col {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.options,
+.checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.options label,
+.checkboxes label {
+  background: #f1f5f9;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: 0.2s;
+  font-size: 0.9rem;
+}
+
+.options label:hover,
+.checkboxes label:hover {
+  background: #dbeafe;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  accent-color: #2563eb;
+  margin-right: 6px;
+}
+
+/* ---------- Button ---------- */
+.submit-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 18px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.submit-btn:hover {
+  background: #1d4ed8;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 600px) {
+  .two-col {
+    flex-direction: column;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+}
