@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resources -My Fitness Buddy</title>
+  <link rel="stylesheet" href="css/Style.css"
+</head>
+<body>
+  
+  
+  <header class="header">
+    <h1>My Fitness Buddy Resources</h1>
+    <nav>
+      <a href="quiz.html">Quiz</a>
+      <a href="resources.html" class="active">Resources</a>
+      <button onclick="logout()">Logout</button>
+    </nav>
+  </header>
+
+  <!-- Main content -->
+  <main class="resource-container">
+    <section class="resource-section">
+      <h2>Workout Videos</h2>
+      <div class="video-grid">
+        <iframe src="https://www.youtube.com/embed/UItWltVZZmE" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/ml6cT4AZdqI" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/UBMk30rjy0o" allowfullscreen></iframe>
+      </div>
+    </section>
+
+    <section class="resource-section">
+      <h2>Healthy Nutrition Tips</h2>
+      <ul class="tips">
+        <li>Eat a balanced diet with fruits, vegetables, and protein.</li>
+        <li>Stay hydrated — drink at least 2–3 liters of water daily.</li>
+        <li>Avoid processed sugar and junk food.</li>
+        <li>Include fiber-rich foods like oats and lentils.</li>
+      </ul>
+    </section>
+
+    <section class="resource-section">
+      <h2>Recommended Articles</h2>
+      <ul class="articles">
+        <li><a href="https://www.healthline.com/nutrition/how-to-start-exercising" target="_blank">How to Start Exercising</a></li>
+        <li><a href="https://www.medicalnewstoday.com/articles/325173" target="_blank">Benefits of Regular Physical Activity</a></li>
+        <li><a href="https://www.nhs.uk/live-well/exercise/" target="_blank">NHS Exercise and Fitness Guide</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 My Fitness Buddy | Stay Fit, Stay Motivated </p>
+  </footer>
+
+  <script>
+    function logout() {
+      localStorage.removeItem("isLoggedIn");
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>
