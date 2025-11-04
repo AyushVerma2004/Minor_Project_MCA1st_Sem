@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - Fitness Buddy</title>
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+  <div class="auth-container">
+    <div class="card">
+      <h1>Welcome Back to <span><a href="Index.html">Your Fitness Buddy</a></span></h1>
+      <p class="subtitle">Login to continue your fitness journey</p>
+
+      <div class="input-group">
+        <input type="email" id="loginEmail" placeholder="Email Address" required>
+        <input type="password" id="loginPassword" placeholder="Password" required>
+        <button class="primary-btn" onclick="login()">Login</button>
+      </div>
+
+      <div class="divider">
+        <span>OR</span>
+      </div>
+
+      <button class="google-btn" id="googleLoginBtn">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google Logo">
+        Continue with Google
+      </button>
+
+      <p class="footer-text">
+        Don’t have an account? <a href="Signin.html">Create one</a>
+      </p>
+    </div>
+  </div>

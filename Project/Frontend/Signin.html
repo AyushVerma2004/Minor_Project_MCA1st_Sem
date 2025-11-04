@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign Up / Login - Fitness Buddy</title>
+  <link rel="stylesheet" href="Sign.css">
+</head>
+<body> 
+  <div class="auth-container">
+    <div class="card">
+      <h1>Welcome to <span> Your Fitness Buddy</span></h1>
+      <p class="subtitle">Start your personalized fitness journey today</p>
+
+      <div class="input-group">
+        <input type="text" id="username" placeholder="Full Name" required>
+        <input type="email" id="email" placeholder="Email Address" required>
+        <input type="tel" id="mobile" placeholder="Mobile Number" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button class="primary-btn" onclick="signup()">Create Account</button>
+      </div>
+
+      <div class="divider">
+        <span>OR</span>
+      </div>
+
+      <button class="google-btn" id="googleLoginBtn">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google Logo">
+        Continue with Google
+      </button>
+
+      <p class="footer-text">
+        Already have an account? <a href="login.html">Login here</a>
+      </p>
+    </div>
+  </div>
+  </body>
+</html>
