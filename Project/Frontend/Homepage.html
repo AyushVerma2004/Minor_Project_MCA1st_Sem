@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Fitness Buddy - Home</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #141E30, #243B55);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    .container {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 40px 50px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      max-width: 900px;
+      width: 90%;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    h1 span {
+      color: #00C9A7;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #ccc;
+      margin-bottom: 30px;
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+
+    .btn {
+      padding: 12px 25px;
+      border: none;
+      border-radius: 8px;
+      background-color: #00C9A7;
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #00A98F;
+      transform: scale(1.05);
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 25px;
+      margin-top: 20px;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 25px;
+      border-radius: 12px;
+      transition: 0.3s ease;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .feature-card h3 {
+      color: #00C9A7;
+      margin-bottom: 10px;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+
+    footer a {
+      color: #00C9A7;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome to <span>Your Fitness Buddy</span></h1>
+    <p>Track your workouts, stay motivated, and achieve your health goals — all in one place.</p>
+
+    <div class="btn-group">
+      <a href="login.html"><button class="btn">Login</button></a>
+      <a href="signin.html"><button class="btn">Sign Up</button></a>
+    </div>
+
+    <section class="features">
+      <div class="feature-card">
+        <h3>💪 Personalized Workout Plans</h3>
+        <p>Get routines tailored to your fitness level and goals, updated as you progress.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>🥗 Nutrition Guidance</h3>
+        <p>Track your meals, calories, and macros to maintain a balanced, healthy diet.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>📊 Progress Tracking</h3>
+        <p>Visualize your journey with detailed progress graphs and milestones.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>🤖 Smart AI Chat Coach</h3>
+        <p>Chat with your virtual fitness assistant for tips, motivation, and guidance.</p>
+      </div>
+    </section>
+
+    <footer>
+      © 2025 Your Fitness Buddy | <a href="#">Privacy Policy</a>
+    </footer>
+  </div>
+</body>
+</html>
