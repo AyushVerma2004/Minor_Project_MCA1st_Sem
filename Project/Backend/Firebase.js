@@ -7,18 +7,19 @@ import {
   createUserWithEmailAndPassword, 
   signInWithEmailAndPassword 
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
 import { 
   getFirestore, 
   setDoc, 
   doc 
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
-// Your Firebase configuration
+// Your Correct Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDRKFVQanh4Q4OF22K4HqlTu_fxaxtD5Sw",
   authDomain: "your-fitness-buddy-5b325.firebaseapp.com",
   projectId: "your-fitness-buddy-5b325",
-  storageBucket: "your-fitness-buddy-5b325.firebasestorage.app",
+  storageBucket: "your-fitness-buddy-5b325.appspot.com",   // FIXED
   messagingSenderId: "773971869699",
   appId: "1:773971869699:web:2cbf98250a163f16d1ce36",
   measurementId: "G-86R010QDXS"
@@ -78,27 +79,26 @@ window.login = async function () {
   }
 };
 
-// --- Google Sign-In (Shared for both pages) ---
-async function googleLogin() {
+// --- Google Sign-In ---
+window.googleLogin = async function () {
   try {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
 
-    // Save user info in Firestore
-    await setDoc(doc(db, "users", user.uid), {
-      name: user.displayName,
-      email: user.email,
-      googleAuth: true,
-      createdAt: new Date()
-    }, { merge: true });
+    await setDoc(
+      doc(db, "users", user.uid), 
+      {
+        name: user.displayName,
+        email: user.email,
+        googleAuth: true,
+        createdAt: new Date()
+      },
+      { merge: true }
+    );
 
     alert(`Welcome ${user.displayName}!`);
     window.location.href = "Survey.html";
   } catch (error) {
     alert("Google Sign-in failed: " + error.message);
   }
-}
-
-// Attach Google login handler to button if it exists
-const googleBtn = document.getElementById("googleLogin");
-if (googleBtn) googleBtn.addEventListener("click", googleLogin);
+};
