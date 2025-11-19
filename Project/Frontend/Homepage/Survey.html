@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Your Fitness Buddy — Survey</title>
-  <link rel="stylesheet" href="Survey.css" />
+  <title>Your Fitness Buddy — Survey + Plan</title>
+  <link rel="stylesheet" href="Plan.css" />
 </head>
 <body>
   <div class="container">
@@ -13,13 +13,13 @@
       <p class="lead">Answer these questions so we can generate your best workout plan.</p>
     </header>
 
-    <form id="fitnessSurvey" class="card" autocomplete="on">
+    <form id="fitnessSurvey" class="card" autocomplete="on" novalidate>
       <!-- 1. Basic Information -->
       <fieldset>
         <legend>1. Basic Information</legend>
 
-        <label>What is your age group?</label>
-        <select name="age_group" required>
+        <label for="age_group">What is your age group?</label>
+        <select id="age_group" name="age_group" required>
           <option value="">Select</option>
           <option>Under 18</option>
           <option>18–25</option>
@@ -28,8 +28,8 @@
           <option>46+</option>
         </select>
 
-        <label>What is your gender?</label>
-        <select name="gender" required>
+        <label for="gender">What is your gender?</label>
+        <select id="gender" name="gender" required>
           <option value="">Select</option>
           <option>Male</option>
           <option>Female</option>
@@ -38,18 +38,18 @@
 
         <div class="two-col">
           <div>
-            <label>Height</label>
-            <input type="number" name="height" placeholder="Height" required>
+            <label for="height">Height (cm)</label>
+            <input type="number" id="height" name="height" placeholder="Height in cm" required min="30" max="300">
           </div>
           <div>
-            <label>Weight</label>
-            <input type="number" name="weight" placeholder="Weight" required>
+            <label for="weight">Weight (kg)</label>
+            <input type="number" id="weight" name="weight" placeholder="Weight in kg" required min="10" max="500">
           </div>
         </div>
 
         <label>Current fitness level:</label>
-        <div class="options">
-          <label><input type="radio" name="fitness_level" value="Beginner"> Beginner</label>
+        <div class="options" aria-label="fitness level">
+          <label><input type="radio" name="fitness_level" value="Beginner" required> Beginner</label>
           <label><input type="radio" name="fitness_level" value="Intermediate"> Intermediate</label>
           <label><input type="radio" name="fitness_level" value="Advanced"> Advanced</label>
         </div>
@@ -59,8 +59,8 @@
       <fieldset>
         <legend>2. Fitness Goals</legend>
 
-        <label>Main fitness goal:</label>
-        <select name="goal" required>
+        <label for="goal">Main fitness goal:</label>
+        <select id="goal" name="goal" required>
           <option value="">Select goal</option>
           <option>Lose weight</option>
           <option>Build muscle</option>
@@ -70,8 +70,8 @@
           <option>Increase flexibility</option>
         </select>
 
-        <label>How soon do you want results?</label>
-        <select name="result_time" required>
+        <label for="result_time">How soon do you want results?</label>
+        <select id="result_time" name="result_time" required>
           <option value="">Select</option>
           <option>1–2 months (intensive)</option>
           <option>3–6 months (balanced)</option>
@@ -83,8 +83,8 @@
       <fieldset>
         <legend>3. Lifestyle & Activity</legend>
 
-        <label>How active are you daily?</label>
-        <select name="activity" required>
+        <label for="activity">How active are you daily?</label>
+        <select id="activity" name="activity" required>
           <option value="">Select</option>
           <option>Mostly sitting</option>
           <option>Lightly active</option>
@@ -93,15 +93,15 @@
         </select>
 
         <label>Workout time available per day:</label>
-        <div class="options">
-          <label><input type="radio" name="workout_time" value="Under 30 min"> Under 30 min</label>
+        <div class="options" aria-label="workout time">
+          <label><input type="radio" name="workout_time" value="Under 30 min" required> Under 30 min</label>
           <label><input type="radio" name="workout_time" value="30–45 min"> 30–45 min</label>
           <label><input type="radio" name="workout_time" value="1 hr"> 1 hr</label>
           <label><input type="radio" name="workout_time" value="More than 1 hr"> More than 1 hr</label>
         </div>
 
         <label>Days you can work out:</label>
-        <div class="checkboxes">
+        <div class="checkboxes" id="daysGroup" role="group" aria-label="days to work out">
           <label><input type="checkbox" name="days" value="Mon">Mon</label>
           <label><input type="checkbox" name="days" value="Tue">Tue</label>
           <label><input type="checkbox" name="days" value="Wed">Wed</label>
@@ -116,8 +116,8 @@
       <fieldset>
         <legend>4. Nutrition & Habits</legend>
 
-        <label>Diet preference:</label>
-        <select name="diet" required>
+        <label for="diet">Diet preference:</label>
+        <select id="diet" name="diet" required>
           <option value="">Select</option>
           <option>Vegetarian</option>
           <option>Non-vegetarian</option>
@@ -127,15 +127,15 @@
         </select>
 
         <label>Sleep quality:</label>
-        <div class="options">
-          <label><input type="radio" name="sleep" value="Poor"> Poor</label>
+        <div class="options" aria-label="sleep quality">
+          <label><input type="radio" name="sleep" value="Poor" required> Poor</label>
           <label><input type="radio" name="sleep" value="Moderate"> Moderate</label>
           <label><input type="radio" name="sleep" value="Good"> Good</label>
         </div>
 
         <label>Do you smoke or drink?</label>
-        <div class="options">
-          <label><input type="radio" name="habits" value="Both"> Both</label>
+        <div class="options" aria-label="habits">
+          <label><input type="radio" name="habits" value="Both" required> Both</label>
           <label><input type="radio" name="habits" value="Only smoke"> Only smoke</label>
           <label><input type="radio" name="habits" value="Only drink"> Only drink</label>
           <label><input type="radio" name="habits" value="Neither"> Neither</label>
@@ -147,7 +147,7 @@
         <legend>5. Exercise Preferences</legend>
 
         <label>Preferred workout type:</label>
-        <div class="checkboxes">
+        <div class="checkboxes" aria-label="workout preference">
           <label><input type="checkbox" name="workout_pref" value="Gym"> Gym</label>
           <label><input type="checkbox" name="workout_pref" value="Home"> Home workouts</label>
           <label><input type="checkbox" name="workout_pref" value="Outdoor"> Outdoor</label>
@@ -155,16 +155,16 @@
           <label><input type="checkbox" name="workout_pref" value="Sports"> Sports</label>
         </div>
 
-        <label>Any injuries or limitations?</label>
-        <input type="text" name="injuries" placeholder="If yes, specify">
+        <label for="injuries">Any injuries or limitations?</label>
+        <input type="text" id="injuries" name="injuries" placeholder="If yes, specify">
       </fieldset>
 
       <!-- 6. Motivation -->
       <fieldset>
         <legend>6. Motivation & Personality</legend>
 
-        <label>What motivates you the most?</label>
-        <select name="motivation">
+        <label for="motivation">What motivates you the most?</label>
+        <select id="motivation" name="motivation">
           <option>Visible results</option>
           <option>Health improvements</option>
           <option>Competing with friends</option>
@@ -172,22 +172,40 @@
         </select>
 
         <label>Do you prefer workouts:</label>
-        <div class="options">
+        <div class="options" aria-label="workout mode">
           <label><input type="radio" name="workout_mode" value="Alone"> Alone</label>
           <label><input type="radio" name="workout_mode" value="With partner"> With partner</label>
           <label><input type="radio" name="workout_mode" value="Group"> Group / class</label>
         </div>
 
-        <label>How consistent are you?</label>
-        <select name="consistency">
+        <label for="consistency">How consistent are you?</label>
+        <select id="consistency" name="consistency">
           <option>I struggle to stay consistent</option>
           <option>I’m fairly regular</option>
           <option>I never miss a session</option>
         </select>
       </fieldset>
 
-      <button type="submit" class="submit-btn">Submit Survey</button>
+      <div class="form-actions">
+        <button type="submit" class="submit-btn">Generate Workout Plan</button>
+        <button type="button" id="resetBtn" class="reset-btn">Reset</button>
+      </div>
     </form>
+
+    <section id="planOutput" class="card hidden" aria-live="polite">
+      <h2>Your Personalized Plan</h2>
+      <div id="planContent"></div>
+      <div class="plan-actions">
+        <button id="downloadPlan" class="download-btn">Download Plan</button>
+        <button id="copyPlan" class="copy-btn">Copy to clipboard</button>
+      </div>
+    </section>
+
+    <footer>
+      <p class="muted">This plan is a general guide. If you have medical conditions or major injuries, consult a professional before starting.</p>
+    </footer>
   </div>
+
+  <script src="Plan.js"></script>
 </body>
 </html>

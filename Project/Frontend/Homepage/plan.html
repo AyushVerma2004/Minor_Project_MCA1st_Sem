@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your Workout Plan</title>
+  <link rel="stylesheet" href="plan.css" />
+  <style>
+    /* small page-level tweaks so things look ok before JS runs */
+    header { text-align:center; margin:20px 0; }
+    .btn-area { text-align:center; margin:18px 0 40px; }
+    .download-btn {
+      background:#4f8cff; color:#fff; border:none; padding:10px 16px; border-radius:8px;
+      cursor:pointer; font-weight:600;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Your Weekly Workout Plan</h1>
+    <p>Based on your survey — generated automatically</p>
+  </header>
+
+  <main>
+    <!-- IMPORTANT: plan.js expects an element with id="workoutGrid" -->
+    <div id="workoutGrid"></div>
+
+    <div class="btn-area">
+      <button id="downloadBtn" class="download-btn">Download as Word File</button>
+      <button id="printBtn" class="download-btn" style="background:#2ecc71;margin-left:8px;">Print</button>
+    </div>
+  </main>
+
+  <!-- load plan.js (must be in same folder, same filename) -->
+  <script src="plan.js"></script>
+
+  <!-- small helper script to enable download/print without changing plan.js -->
+  <script>
+    // Wait until DOMContent loaded and plan.js has populated #workoutGrid
+    document.addEventListener('DOMContentLoaded', () => {
+      const downloadBtn = document.getElementById('downloadBtn');
+      const printBtn = document.getElementById('printBtn');
+      const grid = document.getElementById('workoutGrid');
+
+      // Download as simple .doc (Word will open it)
+      downloadBtn.addEventListener('click', () => {
+        // get printable HTML
+        const headerHtml = '<h1>' + document.querySelector('header h1').innerText + '</h1>';
+        const content = headerHtml + grid.outerHTML;
+        const blob = new Blob(['\ufeff' + content], { type: 'application/msword' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'workout-plan.doc';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      });
+
+      // Print
+      printBtn.addEventListener('click', () => {
+        window.print();
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+/* survey.css - clean, responsive styles */
+:root{
+  --bg:#f5f7fb;
+  --card:#ffffff;
+  --primary:#0b84ff;
+  --muted:#6b7280;
+  --accent:#06b6d4;
+  --radius:12px;
+  --max-width:900px;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:linear-gradient(180deg,#eef5ff 0%,var(--bg) 100%);
+  color:#0f172a;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  padding:28px 16px;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+.container{
+  width:100%;
+  max-width:var(--max-width);
+}
+
+header{margin-bottom:14px}
+h1{font-size:1.5rem;margin:0 0 6px}
+.lead{margin:0;color:var(--muted)}
+
+.card{
+  background:var(--card);
+  border-radius:var(--radius);
+  padding:18px;
+  box-shadow: 0 6px 18px rgba(11,132,255,0.06), 0 2px 6px rgba(2,6,23,0.04);
+  margin-bottom:16px;
+}
+
+fieldset{
+  border:1px solid #e6eefb;
+  padding:12px;
+  margin:10px 0;
+  border-radius:10px;
+}
+legend{font-weight:600;padding:0 6px}
+
+label{display:block;margin:8px 0 6px;font-size:0.92rem}
+input[type="number"], input[type="text"], select, .options, .checkboxes{
+  width:100%;
+  padding:8px 10px;
+  border-radius:8px;
+  border:1px solid #e6eefb;
+  background:#fff;
+  font-size:0.95rem;
+}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.options{display:flex;gap:10px;flex-wrap:wrap}
+.options label, .checkboxes label{display:inline-flex;align-items:center;gap:6px;padding:6px 4px}
+.checkboxes{display:flex;gap:8px;flex-wrap:wrap}
+
+.form-actions{display:flex;gap:10px;margin-top:10px}
+.submit-btn, .reset-btn, .download-btn, .copy-btn{
+  cursor:pointer;
+  padding:10px 14px;
+  border-radius:10px;
+  border:none;
+  font-weight:600;
+  background:var(--primary);
+  color:white;
+  box-shadow: 0 6px 14px rgba(11,132,255,0.12);
+}
+.reset-btn{background:#f3f4f6;color:#111;border:1px solid #e6eefb;box-shadow:none}
+.download-btn, .copy-btn{background:var(--accent); margin-right:8px}
+.hidden{display:none}
+
+#planContent{
+  margin-top:8px;
+  line-height:1.45;
+}
+.plan-actions{margin-top:12px}
+
+.muted{color:var(--muted);font-size:0.88rem;text-align:center;margin-top:6px}
+
+/* Responsive adjustments */
+@media (max-width:640px){
+  .two-col{grid-template-columns:1fr}
+  .options, .checkboxes{gap:6px}
+  .submit-btn{flex:1}
+}
