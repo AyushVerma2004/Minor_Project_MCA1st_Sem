@@ -60,7 +60,7 @@ window.signup = async function () {
     });
 
     alert("Account Created Successfully!");
-    window.location.href = "Survey.html";
+    window.location.href = "Afterlogin.html";
 
   } catch (error) {
     alert("Signup Failed: " + error.message);
