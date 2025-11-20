@@ -60,7 +60,7 @@ window.signup = async function () {
     });
 
     alert("Account Created Successfully!");
-    window.location.href = "Survey.html";
+    window.location.href = "Afterlogin.html";
 
   } catch (error) {
     alert("Signup Failed: " + error.message);
@@ -83,7 +83,7 @@ window.login = async function () {
   try {
     await signInWithEmailAndPassword(auth, email, password);
     alert("Login Successful!");
-    window.location.href = "Survey.html";
+    window.location.href = "Afterlogin.html";
   } catch (error) {
     alert("Login Failed: " + error.message);
   }
@@ -110,7 +110,7 @@ window.googleLogin = async function () {
     );
 
     alert("Welcome " + user.displayName + "!");
-    window.location.href = "Survey.html";
+    window.location.href = "Afterlogin.html";
 
   } catch (error) {
     alert("Google Sign-in Failed: " + error.message);
