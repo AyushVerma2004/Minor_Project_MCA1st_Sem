@@ -1,6 +1,9 @@
 // ---------------------------
 // Logout Function
 // ---------------------------
+import React from "react";
+import TutorialVideos from "./components/TutorialVideos";
+
 function logout() {
     localStorage.removeItem("isLoggedIn");
     window.location.href = "index.html";
@@ -66,3 +69,12 @@ window.addEventListener("scroll", () => {
 backTopBtn.addEventListener("click", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
 });
+function Resources() {
+  return (
+    <div>
+      <TutorialVideos />
+    </div>
+  );
+}
+
+export default Resources;
