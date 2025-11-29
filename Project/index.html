@@ -1,44 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Your Fitness Buddy - Home</title>
   <style>
-    body {
+    /* Reset and base */
+    * {
+      box-sizing: border-box;
       margin: 0;
-      font-family: "Poppins", sans-serif;
-      background: linear-gradient(135deg, #141E30, #243B55);
-      color: #fff;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0f0f0f, #1a1a1a, #242424);
+      color: #ffffff;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
-      flex-direction: column;
+      padding: 20px;
     }
 
     .container {
-      text-align: center;
+      width: 100%;
+      max-width: 1200px;
+      padding: 40px 25px;
       background: rgba(255, 255, 255, 0.08);
-      padding: 40px 50px;
-      border-radius: 20px;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      max-width: 900px;
-      width: 90%;
+      border-radius: 24px;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
+      text-align: center;
+      animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     h1 {
-      font-size: 2.5rem;
+      font-size: 2.2rem;
       margin-bottom: 10px;
+      font-weight: 600;
     }
 
-    h1 span {
-      color: #00C9A7;
-    }
+    h1 span { color: #00C9A7; }
 
     p {
       font-size: 1rem;
-      color: #ccc;
+      color: #dcdcdc;
       margin-bottom: 30px;
     }
 
@@ -47,74 +59,94 @@
       justify-content: center;
       gap: 15px;
       flex-wrap: wrap;
-      margin-bottom: 40px;
+      margin-bottom: 35px;
     }
 
     .btn {
       padding: 12px 25px;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       background-color: #00C9A7;
       color: #fff;
       font-size: 1rem;
       cursor: pointer;
       transition: 0.3s ease;
+      font-weight: 600;
     }
 
     .btn:hover {
       background-color: #00A98F;
-      transform: scale(1.05);
+      transform: scale(1.06);
     }
 
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
+    a { text-decoration: none; color: inherit; }
 
     .features {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 25px;
-      margin-top: 20px;
+      gap: 20px;
+      margin-top: 25px;
     }
 
     .feature-card {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 25px;
-      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.12);
+      padding: 20px;
+      border-radius: 14px;
       transition: 0.3s ease;
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
     .feature-card:hover {
-      transform: translateY(-5px);
-      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-6px);
+      background: rgba(255, 255, 255, 0.18);
     }
 
     .feature-card h3 {
       color: #00C9A7;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
+      font-size: 1.1rem;
+    }
+
+    .feature-card p {
+      flex-grow: 1;
+      font-size: 0.95rem;
+      color: #ddd;
     }
 
     footer {
-      margin-top: 40px;
-      font-size: 0.9rem;
-      color: #aaa;
+      margin-top: 30px;
+      font-size: 0.85rem;
+      color: #bbb;
     }
 
-    footer a {
-      color: #00C9A7;
+    footer a { color: #00C9A7; }
+    footer a:hover { text-decoration: underline; }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      h1 { font-size: 1.8rem; }
+      p { font-size: 0.95rem; }
+      .btn { font-size: 0.95rem; padding: 10px 20px; }
+      .container { padding: 30px 20px; }
+      .features { gap: 15px; }
     }
 
-    footer a:hover {
-      text-decoration: underline;
+    @media (max-width: 480px) {
+      h1 { font-size: 1.5rem; }
+      p { font-size: 0.9rem; margin-bottom: 20px; }
+      .btn { font-size: 0.9rem; padding: 8px 18px; }
+      .container { padding: 25px 15px; }
     }
   </style>
 </head>
 <body>
   <div class="container">
+
     <h1>Welcome to <span>Your Fitness Buddy</span></h1>
-    <p>Track your workouts, stay motivated, and achieve your health goals — all in one place.</p>
+    <p>Your personalized space to track workouts, stay motivated, and transform your fitness journey.</p>
 
     <div class="btn-group">
       <a href="login.html"><button class="btn">Login</button></a>
@@ -124,28 +156,50 @@
     <section class="features">
       <div class="feature-card">
         <h3>💪 Personalized Workout Plans</h3>
-        <p>Get routines tailored to your fitness level and goals, updated as you progress.</p>
+        <p>Workouts tailored to your goals and level, adjusted as you improve.</p>
+        <a href="Afterlogin.html"><button class="btn" style="margin-top:15px;width:100%;">Explore</button></a>
       </div>
 
       <div class="feature-card">
         <h3>🥗 Nutrition Guidance</h3>
-        <p>Track your meals, calories, and macros to maintain a balanced, healthy diet.</p>
+        <p>Balance your diet with calorie & macro tracking tools.</p>
+        <a href="Nutrition.html"><button class="btn" style="margin-top:15px;width:100%;">Explore</button></a>
       </div>
 
       <div class="feature-card">
         <h3>📊 Progress Tracking</h3>
-        <p>Visualize your journey with detailed progress graphs and milestones.</p>
+        <p>Monitor your achievements with graphical progress insights.</p>
+        <a href="Progress.html"><button class="btn" style="margin-top:15px;width:100%;">Explore</button></a>
       </div>
 
       <div class="feature-card">
         <h3>🤖 Smart AI Chat Coach</h3>
-        <p>Chat with your virtual fitness assistant for tips, motivation, and guidance.</p>
+        <p>Your personal assistant for tips, motivation & fitness knowledge.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>📈 Specific Training</h3>
+        <p>Train any muscle group with guided levels.</p>
+        <a href="Particular.html"><button class="btn" style="margin-top:15px;width:100%;">Explore</button></a>
+      </div>
+
+      <div class="feature-card">
+        <h3>📝 Create Your Own Plan</h3>
+        <p>Monitor your achievements with graphical progress insights.</p>
+        <a href="Progress.html"><button class="btn" style="margin-top:15px;width:100%;">Explore</button></a>
+      </div>
+
+      <div class="feature-card">
+        <h3>🎯 Goal Tracker</h3>
+        <p>Add Goals Accomplish them.</p>
+        <a href="Goaltracker.html"><button class="btn" style="margin-top:15px;width:100%;">Explore</button></a>
       </div>
     </section>
 
     <footer>
       © 2025 Your Fitness Buddy | <a href="#">Privacy Policy</a>
     </footer>
+
   </div>
 </body>
 </html>
