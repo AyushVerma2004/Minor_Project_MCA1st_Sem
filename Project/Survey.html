@@ -7,7 +7,12 @@
   <link rel="stylesheet" href="Survey.css" />
 </head>
 <body>
-  <div class="container">
+
+  <div class="progress-bar">
+    <div id="progress"></div>
+  </div>
+
+  <div class="container fade-in">
     <header>
       <h1>Your Fitness Buddy — Quick Survey</h1>
       <p class="lead">Answer these questions so we can generate your best workout plan.</p>
@@ -16,7 +21,7 @@
     <form id="fitnessSurvey" class="card" autocomplete="on" action="plan.html" method="GET">
 
       <!-- 1. Basic Information -->
-      <fieldset>
+      <fieldset class="section">
         <legend>1. Basic Information</legend>
 
         <label for="age_group">What is your age group?</label>
@@ -50,14 +55,14 @@
 
         <label>Fitness Level:</label>
         <div class="options">
-          <label><input type="radio" name="fitness_level" value="Beginner" required> Beginner</label>
-          <label><input type="radio" name="fitness_level" value="Intermediate"> Intermediate</label>
-          <label><input type="radio" name="fitness_level" value="Advanced"> Advanced</label>
+          <label class="selectable"><input type="radio" name="fitness_level" value="Beginner" required> Beginner</label>
+          <label class="selectable"><input type="radio" name="fitness_level" value="Intermediate"> Intermediate</label>
+          <label class="selectable"><input type="radio" name="fitness_level" value="Advanced"> Advanced</label>
         </div>
       </fieldset>
 
       <!-- Fitness Goals -->
-      <fieldset>
+      <fieldset class="section">
         <legend>2. Fitness Goals</legend>
 
         <label for="goal">Main goal:</label>
@@ -81,7 +86,7 @@
       </fieldset>
 
       <!-- Lifestyle -->
-      <fieldset>
+      <fieldset class="section">
         <legend>3. Lifestyle & Activity</legend>
 
         <label for="activity">Daily activity:</label>
@@ -95,26 +100,26 @@
 
         <label>Workout time/day:</label>
         <div class="options">
-          <label><input type="radio" name="workout_time" value="Under 30 min" required> Under 30 min</label>
-          <label><input type="radio" name="workout_time" value="30–45 min"> 30–45 min</label>
-          <label><input type="radio" name="workout_time" value="1 hr"> 1 hr</label>
-          <label><input type="radio" name="workout_time" value="More than 1 hr"> More than 1 hr</label>
+          <label class="selectable"><input type="radio" name="workout_time" value="Under 30 min" required> Under 30 min</label>
+          <label class="selectable"><input type="radio" name="workout_time" value="30–45 min"> 30–45 min</label>
+          <label class="selectable"><input type="radio" name="workout_time" value="1 hr"> 1 hr</label>
+          <label class="selectable"><input type="radio" name="workout_time" value="More than 1 hr"> More than 1 hr</label>
         </div>
 
         <label>Days you can work out:</label>
         <div class="checkboxes">
-          <label><input type="checkbox" name="days" value="Mon">Mon</label>
-          <label><input type="checkbox" name="days" value="Tue">Tue</label>
-          <label><input type="checkbox" name="days" value="Wed">Wed</label>
-          <label><input type="checkbox" name="days" value="Thu">Thu</label>
-          <label><input type="checkbox" name="days" value="Fri">Fri</label>
-          <label><input type="checkbox" name="days" value="Sat">Sat</label>
-          <label><input type="checkbox" name="days" value="Sun">Sun</label>
+          <label class="check"><input type="checkbox" name="days" value="Mon">Mon</label>
+          <label class="check"><input type="checkbox" name="days" value="Tue">Tue</label>
+          <label class="check"><input type="checkbox" name="days" value="Wed">Wed</label>
+          <label class="check"><input type="checkbox" name="days" value="Thu">Thu</label>
+          <label class="check"><input type="checkbox" name="days" value="Fri">Fri</label>
+          <label class="check"><input type="checkbox" name="days" value="Sat">Sat</label>
+          <label class="check"><input type="checkbox" name="days" value="Sun">Sun</label>
         </div>
       </fieldset>
 
       <!-- Nutrition -->
-      <fieldset>
+      <fieldset class="section">
         <legend>4. Nutrition & Habits</legend>
 
         <label for="diet">Diet:</label>
@@ -129,31 +134,31 @@
 
         <label>Sleep quality:</label>
         <div class="options">
-          <label><input type="radio" name="sleep" value="Poor" required> Poor</label>
-          <label><input type="radio" name="sleep" value="Moderate"> Moderate</label>
-          <label><input type="radio" name="sleep" value="Good"> Good</label>
+          <label class="selectable"><input type="radio" name="sleep" value="Poor" required> Poor</label>
+          <label class="selectable"><input type="radio" name="sleep" value="Moderate"> Moderate</label>
+          <label class="selectable"><input type="radio" name="sleep" value="Good"> Good</label>
         </div>
 
         <label>Do you smoke/drink?</label>
         <div class="options">
-          <label><input type="radio" name="habits" value="Both" required> Both</label>
-          <label><input type="radio" name="habits" value="Only smoke"> Only smoke</label>
-          <label><input type="radio" name="habits" value="Only drink"> Only drink</label>
-          <label><input type="radio" name="habits" value="Neither"> Neither</label>
+          <label class="selectable"><input type="radio" name="habits" value="Both" required> Both</label>
+          <label class="selectable"><input type="radio" name="habits" value="Only smoke"> Only smoke</label>
+          <label class="selectable"><input type="radio" name="habits" value="Only drink"> Only drink</label>
+          <label class="selectable"><input type="radio" name="habits" value="Neither"> Neither</label>
         </div>
       </fieldset>
 
       <!-- Exercise Preferences -->
-      <fieldset>
+      <fieldset class="section">
         <legend>5. Exercise Preferences</legend>
 
         <label>Preferred workout type:</label>
         <div class="checkboxes">
-          <label><input type="checkbox" name="workout_pref" value="Gym"> Gym</label>
-          <label><input type="checkbox" name="workout_pref" value="Home"> Home</label>
-          <label><input type="checkbox" name="workout_pref" value="Outdoor"> Outdoor</label>
-          <label><input type="checkbox" name="workout_pref" value="Yoga"> Yoga</label>
-          <label><input type="checkbox" name="workout_pref" value="Sports"> Sports</label>
+          <label class="check"><input type="checkbox" name="workout_pref" value="Gym"> Gym</label>
+          <label class="check"><input type="checkbox" name="workout_pref" value="Home"> Home</label>
+          <label class="check"><input type="checkbox" name="workout_pref" value="Outdoor"> Outdoor</label>
+          <label class="check"><input type="checkbox" name="workout_pref" value="Yoga"> Yoga</label>
+          <label class="check"><input type="checkbox" name="workout_pref" value="Sports"> Sports</label>
         </div>
 
         <label for="injuries">Any injuries?</label>
@@ -161,7 +166,7 @@
       </fieldset>
 
       <!-- Motivation -->
-      <fieldset>
+      <fieldset class="section">
         <legend>6. Motivation & Personality</legend>
 
         <label for="motivation">What motivates you?</label>
@@ -174,9 +179,9 @@
 
         <label>Prefer workouts:</label>
         <div class="options">
-          <label><input type="radio" name="workout_mode" value="Alone"> Alone</label>
-          <label><input type="radio" name="workout_mode" value="With partner"> With partner</label>
-          <label><input type="radio" name="workout_mode" value="Group"> Group</label>
+          <label class="selectable"><input type="radio" name="workout_mode" value="Alone"> Alone</label>
+          <label class="selectable"><input type="radio" name="workout_mode" value="With partner"> With partner</label>
+          <label class="selectable"><input type="radio" name="workout_mode" value="Group"> Group</label>
         </div>
 
         <label for="consistency">Consistency:</label>

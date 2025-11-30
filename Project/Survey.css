@@ -1,95 +1,212 @@
-/* survey.css - clean, responsive styles */
-:root{
-  --bg:#f5f7fb;
-  --card:#ffffff;
-  --primary:#0b84ff;
-  --muted:#6b7280;
-  --accent:#06b6d4;
-  --radius:12px;
-  --max-width:900px;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+/* ================================
+   SURVEY PAGE — DARK NEON THEME
+   Matches Your Fitness Buddy Theme
+   ================================ */
+
+:root {
+  --bg: #0f1217;
+  --card: #1a1f27;
+  --accent: #00e6c3;
+  --primary: #0095ff;
+  --text: #f1f5f9;
+  --muted: #9ca3af;
+  --radius: 14px;
+  --max-width: 900px;
+
+  font-family: "Poppins", "Inter", sans-serif;
 }
 
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0;
-  background:linear-gradient(180deg,#eef5ff 0%,var(--bg) 100%);
-  color:#0f172a;
-  display:flex;
-  align-items:flex-start;
-  justify-content:center;
-  padding:28px 16px;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  background: linear-gradient(135deg, #0a0d12, #161b22);
+  color: var(--text);
+  display: flex;
+  justify-content: center;
+  padding: 28px 16px;
 }
 
-.container{
-  width:100%;
-  max-width:var(--max-width);
+/* Container */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
 }
 
-header{margin-bottom:14px}
-h1{font-size:1.5rem;margin:0 0 6px}
-.lead{margin:0;color:var(--muted)}
-
-.card{
-  background:var(--card);
-  border-radius:var(--radius);
-  padding:18px;
-  box-shadow: 0 6px 18px rgba(11,132,255,0.06), 0 2px 6px rgba(2,6,23,0.04);
-  margin-bottom:16px;
+/* Header */
+header {
+  margin-bottom: 18px;
+  text-align: center;
 }
 
-fieldset{
-  border:1px solid #e6eefb;
-  padding:12px;
-  margin:10px 0;
-  border-radius:10px;
-}
-legend{font-weight:600;padding:0 6px}
-
-label{display:block;margin:8px 0 6px;font-size:0.92rem}
-input[type="number"], input[type="text"], select, .options, .checkboxes{
-  width:100%;
-  padding:8px 10px;
-  border-radius:8px;
-  border:1px solid #e6eefb;
-  background:#fff;
-  font-size:0.95rem;
+h1 {
+  margin: 0 0 6px;
+  font-size: 1.9rem;
+  color: #4cc9ff;
+  font-weight: 700;
 }
 
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.options{display:flex;gap:10px;flex-wrap:wrap}
-.options label, .checkboxes label{display:inline-flex;align-items:center;gap:6px;padding:6px 4px}
-.checkboxes{display:flex;gap:8px;flex-wrap:wrap}
-
-.form-actions{display:flex;gap:10px;margin-top:10px}
-.submit-btn, .reset-btn, .download-btn, .copy-btn{
-  cursor:pointer;
-  padding:10px 14px;
-  border-radius:10px;
-  border:none;
-  font-weight:600;
-  background:var(--primary);
-  color:white;
-  box-shadow: 0 6px 14px rgba(11,132,255,0.12);
+.lead {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
 }
-.reset-btn{background:#f3f4f6;color:#111;border:1px solid #e6eefb;box-shadow:none}
-.download-btn, .copy-btn{background:var(--accent); margin-right:8px}
-.hidden{display:none}
 
-#planContent{
-  margin-top:8px;
-  line-height:1.45;
+/* Cards */
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 22px;
+  box-shadow: 0 0 25px rgba(0, 255, 200, 0.05),
+              0 0 8px rgba(0, 255, 200, 0.08);
+  margin-bottom: 18px;
+  transition: 0.3s ease;
 }
-.plan-actions{margin-top:12px}
 
-.muted{color:var(--muted);font-size:0.88rem;text-align:center;margin-top:6px}
+.card:hover {
+  box-shadow: 0 0 25px rgba(0, 255, 200, 0.09),
+              0 0 12px rgba(0, 255, 200, 0.12);
+}
 
-/* Responsive adjustments */
-@media (max-width:640px){
-  .two-col{grid-template-columns:1fr}
-  .options, .checkboxes{gap:6px}
-  .submit-btn{flex:1}
+/* Fieldsets */
+fieldset {
+  border: 1px solid rgba(0, 230, 195, 0.25);
+  padding: 14px;
+  margin: 14px 0;
+  border-radius: 12px;
+  transition: 0.2s ease;
+}
+
+fieldset:hover {
+  border-color: var(--accent);
+}
+
+legend {
+  padding: 0 8px;
+  font-weight: 600;
+  color: var(--accent);
+  font-size: 1rem;
+}
+
+/* Labels & Inputs */
+label {
+  display: block;
+  margin: 10px 0 6px;
+  font-size: 0.92rem;
+}
+
+input[type="number"],
+input[type="text"],
+select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: #11151a;
+  color: var(--text);
+  font-size: 0.95rem;
+  transition: 0.2s ease;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 8px rgba(0, 230, 195, 0.4);
+}
+
+/* Two Column Layout */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* Radio/Checkbox Groups */
+.options,
+.checkboxes {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.options label,
+.checkboxes label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.25s ease;
+  border: 1px solid transparent;
+}
+
+.options label:hover,
+.checkboxes label:hover {
+  background: rgba(0, 230, 195, 0.1);
+  border-color: var(--accent);
+}
+
+/* Highlight selected radio/checkbox */
+input[type="radio"]:checked + span,
+input[type="checkbox"]:checked + span {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* Buttons */
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.submit-btn,
+.reset-btn {
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.submit-btn {
+  background: var(--accent);
+  color: #000;
+  box-shadow: 0 0 15px rgba(0,255,200,0.2);
+}
+
+.submit-btn:hover {
+  box-shadow: 0 0 20px rgba(0,255,200,0.35);
+  transform: translateY(-2px);
+}
+
+.reset-btn {
+  background: rgba(255,255,255,0.08);
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.15);
+}
+
+.reset-btn:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+/* Footer */
+.muted {
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .two-col { grid-template-columns: 1fr; }
+  .options, .checkboxes { gap: 6px; }
+  .submit-btn { flex: 1; }
 }
