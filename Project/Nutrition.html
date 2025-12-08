@@ -1,264 +1,242 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nutrition Guidance</title>
-  <header class="site-header">
-  <div class="header-left">
-    <h1 class="site-logo">Your Fitness Buddy</h1>
-    <p class="motivation">Push your limits, achieve your goals!</p>
-  </div>
-  <div class="header-right">
-    <a href="index.html" class="back-home-btn">🏠 Back to Home</a>
-  </div>
-</header>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Fitness Buddy — Nutrition Planner</title>
 
-  <style>
-    :root {
-  --bg:#0f1724;
-  --card:#0b1220;
-  --accent:#ff6b6b;
-  --accent-2:#60a5fa;
-  --muted:#94a3b8;
-  --radius:12px;
+<style>
+:root{
+  --bg:#0a0f1a;
+  --bg2:#0d1525;
+  --card:#0f1b2e;
+  --glass:rgba(255,255,255,0.06);
+  --border:rgba(255,255,255,0.15);
   --text:#e6eef8;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  --muted:#9ca3af;
+  --accent:#ff6b6b;
+  --accent2:#60a5fa;
+  font-family: Inter, system-ui, sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  background:linear-gradient(180deg,var(--bg),var(--bg2));
+  color:var(--text);
+  min-height:100vh;
+  padding:20px;
 }
 
-.site-header {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  background: linear-gradient(90deg, var(--accent), var(--accent-2));
-  padding: 16px 24px;
-  border-radius: var(--radius);
-  color: var(--text);
-  margin-bottom: 24px;
+/* Wrapper */
+.container{
+  max-width:900px;
+  margin:auto;
+  background:var(--glass);
+  padding:30px;
+  border-radius:20px;
+  border:1px solid var(--border);
+  backdrop-filter:blur(10px);
 }
 
-.header-left h1.site-logo {
-  margin: 0;
-  font-size: 20px;
+/* Header */
+.header{
+  text-align:center;
+  margin-bottom:25px;
 }
-
-.header-left p.motivation {
-  margin: 4px 0 0 0;
-  font-size: 14px;
-  color: rgba(230,238,248,0.85);
+.logo{
+  width:60px;
+  height:60px;
+  margin:auto;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  border-radius:16px;
+  font-size:30px;
+  margin-bottom:10px;
 }
+h1{font-size:26px;}
+.subtitle{color:var(--muted);margin-top:6px;font-size:15px;}
 
-.header-right .back-home-btn {
-  text-decoration: none;
-  background: var(--card);
-  padding: 8px 16px;
-  border-radius: var(--radius);
-  font-weight: 600;
-  color: var(--text);
-  transition: all 0.3s ease;
+/* Form */
+label{
+  display:block;
+  margin:12px 0 6px;
+  font-weight:600;
 }
-
-.header-right .back-home-btn:hover {
-  background: linear-gradient(90deg, var(--accent-2), var(--accent));
-  color: #071020;
+input, select{
+  width:100%;
+  padding:12px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:#142032;
+  color:var(--text);
+  font-size:15px;
 }
+select option{color:black;} /* dropdown text visible */
 
-@media (max-width:600px){
-  .site-header { flex-direction: column; align-items: flex-start; gap: 8px; }
-  .header-right { align-self: stretch; }
+button{
+  width:100%;
+  padding:14px;
+  margin-top:20px;
+  border:none;
+  border-radius:12px;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  color:#000;
 }
-    body {
-      font-family: Poppins, sans-serif;
-      background: linear-gradient(135deg, #0f0f0f, #1a1a1a, #242424);
-      color: white;
-      margin: 0;
-      padding: 20px;
-    }
+button:hover{opacity:0.9;}
 
-    h1, h2 {
-      text-align: center;
-      margin-bottom: 15px;
-    }
-
-    .container {
-      max-width: 750px;
-      margin: auto;
-      background: rgba(255,255,255,0.08);
-      padding: 25px;
-      border-radius: 16px;
-      backdrop-filter: blur(12px);
-      margin-bottom: 30px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.4);
-    }
-
-    input, select, button {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border-radius: 10px;
-      border: none;
-      outline: none;
-      font-size: 1rem;
-    }
-
-    input, select {
-      background: rgba(255,255,255,0.18);
-      color: white;
-    }
-
-    button {
-      background: #00C9A7;
-      color: black;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    button:hover {
-      transform: scale(1.05);
-      background: #00b495;
-    }
-
-    .meal-card {
-      background: rgba(255,255,255,0.12);
-      padding: 15px;
-      margin: 10px 0;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
-    }
-
-    ul {
-      padding-left: 20px;
-    }
-
-    #dietPlan {
-      margin-top: 20px;
-      background: rgba(255,255,255,0.12);
-      padding: 20px;
-      border-radius: 12px;
-      display: none;
-    }
-  </style>
+.result-box{
+  margin-top:25px;
+  padding:20px;
+  border-radius:16px;
+  background:rgba(255,255,255,0.06);
+  border:1px solid var(--border);
+}
+.result-title{
+  font-size:20px;
+  margin-bottom:12px;
+  font-weight:700;
+  text-align:center;
+}
+.meal{
+  margin:10px 0;
+  padding:10px;
+  border-radius:12px;
+  background:rgba(255,255,255,0.05);
+}
+.meal strong{color:var(--accent2);}
+</style>
 </head>
 <body>
 
-<h1>🍏 Nutrition Guidance</h1>
-
 <div class="container">
-  <h2>Daily Calorie Needs</h2>
 
-  <input type="number" id="age" placeholder="Age (years)">
-  <input type="number" id="weight" placeholder="Weight (kg)">
-  <input type="number" id="height" placeholder="Height (cm)">
+<div class="header">
+  <div class="logo">🥗</div>
+  <h1>Smart Nutrition Planner</h1>
+  <p class="subtitle">Calculate calories + get a personalized diet ✨</p>
+</div>
 
+<!-- FORM -->
+<div>
+  <label>Age</label>
+  <input type="number" id="age" placeholder="Enter age">
+
+  <label>Gender</label>
   <select id="gender">
     <option value="male">Male</option>
     <option value="female">Female</option>
   </select>
 
+  <label>Height (cm)</label>
+  <input type="number" id="height" placeholder="Enter height">
+
+  <label>Weight (kg)</label>
+  <input type="number" id="weight" placeholder="Enter weight">
+
+  <label>Activity Level</label>
   <select id="activity">
-    <option value="1.2">Sedentary</option>
-    <option value="1.375">Lightly Active</option>
-    <option value="1.55">Moderately Active</option>
-    <option value="1.725">Very Active</option>
+    <option value="1.2">Sedentary 🪑</option>
+    <option value="1.375">Light Active 🚶</option>
+    <option value="1.55">Moderate 🏋️</option>
+    <option value="1.725">Very Active 💪</option>
   </select>
 
+  <label>Fitness Goal</label>
   <select id="goal">
-    <option value="loss">Weight Loss</option>
-    <option value="maintain">Maintain Weight</option>
-    <option value="gain">Muscle Gain</option>
+    <option value="lose">Lose Weight 🔥</option>
+    <option value="maintain">Maintain ⚖️</option>
+    <option value="gain">Gain Muscle 💪</option>
   </select>
 
-  <select id="dietType">
-    <option value="veg">Vegetarian</option>
-    <option value="nonveg">Non‑Vegetarian</option>
+  <label>Food Preference</label>
+  <select id="food">
+    <option value="veg">Vegetarian 🥦</option>
+    <option value="nonveg">Non-Veg 🍗</option>
   </select>
 
-  <button onclick="calculateCalories()">Calculate</button>
+  <label>Workout Intensity</label>
+  <select id="intensity">
+    <option value="low">Low 🌱</option>
+    <option value="medium">Medium ⚡</option>
+    <option value="high">High 🔥</option>
+  </select>
 
-  <h3 id="result" style="text-align:center; margin-top:10px;"></h3>
+  <button onclick="generateDiet()">Generate Diet Plan</button>
 </div>
 
-<div id="dietPlan" class="container"></div>
+<div id="result" class="result-box" style="display:none;"></div>
+
+</div>
+
 
 <script>
 function calculateCalories() {
-  let age = document.getElementById("age").value;
-  let weight = document.getElementById("weight").value;
-  let height = document.getElementById("height").value;
+  let age = +document.getElementById("age").value;
   let gender = document.getElementById("gender").value;
-  let activity = document.getElementById("activity").value;
+  let height = +document.getElementById("height").value;
+  let weight = +document.getElementById("weight").value;
+  let activity = +document.getElementById("activity").value;
   let goal = document.getElementById("goal").value;
-  let diet = document.getElementById("dietType").value;
 
-  if (!age || !weight || !height) {
-    alert("Please fill all fields!");
-    return;
-  }
+  // BMR Formula (Mifflin St Jeor)
+  let bmr = gender === "male"
+      ? 10 * weight + 6.25 * height - 5 * age + 5
+      : 10 * weight + 6.25 * height - 5 * age - 161;
 
-  let bmr;
-  if (gender === "male") {
-    bmr = 10 * weight + 6.25 * height - 5 * age + 5;
-  } else {
-    bmr = 10 * weight + 6.25 * height - 5 * age - 161;
-  }
+  let total = bmr * activity;
 
-  let tdee = bmr * activity;
+  if (goal === "lose") total -= 400;
+  if (goal === "gain") total += 350;
 
-  if (goal === "loss") tdee -= 400;
-  if (goal === "gain") tdee += 300;
-
-  document.getElementById("result").innerText =
-    "Recommended Calories: " + Math.round(tdee) + " kcal/day";
-
-  generateDietPlan(goal, diet);
+  return Math.round(total);
 }
 
-function generateDietPlan(goal, diet) {
-  let plan = "";
 
-  const vegLoss = `
-    <h2>🥗 Veg Weight Loss Plan</h2>
-    <ul>
-      <li>Breakfast: Oats + Fruits + Green Tea</li>
-      <li>Lunch: 2 Rotis + Dal + Salad</li>
-      <li>Dinner: Paneer + Veggies</li>
-    </ul>`;
+function generateDiet() {
+  let calories = calculateCalories();
+  let food = document.getElementById("food").value;
+  let intensity = document.getElementById("intensity").value;
 
-  const vegGain = `
-    <h2>💪 Veg Muscle Gain Plan</h2>
-    <ul>
-      <li>Breakfast: Peanut Butter Oats + Milk</li>
-      <li>Lunch: Paneer + Rice + Curd</li>
-      <li>Dinner: Soya + Roti + Veggies</li>
-    </ul>`;
+  let result = document.getElementById("result");
+  result.style.display = "block";
 
-  const nonvegLoss = `
-    <h2>🍗 Non‑Veg Weight Loss Plan</h2>
-    <ul>
-      <li>Breakfast: Eggs + Fruits + Black Coffee</li>
-      <li>Lunch: Grilled Chicken + Veggies</li>
-      <li>Dinner: Chicken Soup + Salad</li>
-    </ul>`;
+  let protein = intensity === "high" ? "High Protein" : intensity === "medium" ? "Moderate Protein" : "Light Protein";
 
-  const nonvegGain = `
-    <h2>🔥 Non‑Veg Muscle Gain Plan</h2>
-    <ul>
-      <li>Breakfast: Eggs + Peanut Butter Toast</li>
-      <li>Lunch: Chicken + Rice + Curd</li>
-      <li>Dinner: Fish/Chicken + Roti + Veggies</li>
-    </ul>`;
+  let diet = `
+    <div class="result-title">Daily Calorie Target: <span style="color:var(--accent2);">${calories} kcal</span></div>
 
-  if (diet === "veg" && goal === "loss") plan = vegLoss;
-  if (diet === "veg" && goal === "gain") plan = vegGain;
-  if (diet === "nonveg" && goal === "loss") plan = nonvegLoss;
-  if (diet === "nonveg" && goal === "gain") plan = nonvegGain;
-  if (goal === "maintain") plan = `<h2>⚖️ Balanced Maintenance Diet</h2><p>Eat clean, balanced food with moderate calories.</p>`;
+    <div class="meal"><strong>🍳 Breakfast</strong><br>
+      ${food === "veg"
+        ? `${protein} oats bowl + fruits + almonds`
+        : `${protein} eggs / omelette + toast + fruits`}
+    </div>
 
-  const box = document.getElementById("dietPlan");
-  box.style.display = "block";
-  box.innerHTML = plan;
+    <div class="meal"><strong>🥗 Lunch</strong><br>
+      ${food === "veg"
+        ? `Dal + rice/roti + vegetables + paneer salad`
+        : `Grilled chicken/fish + rice/roti + vegetables`}
+    </div>
+
+    <div class="meal"><strong>🍌 Snack</strong><br>
+      Greek yogurt / banana / peanut butter toast
+    </div>
+
+    <div class="meal"><strong>🍽 Dinner</strong><br>
+      ${food === "veg"
+        ? `Paneer/soy curry + vegetables + soup`
+        : `Egg curry / chicken curry + vegetables + soup`}
+    </div>
+
+    <div class="meal"><strong>💧 Hydration</strong><br>
+      3–4 liters water + electrolytes (on high intensity days)
+    </div>
+  `;
+
+  result.innerHTML = diet;
 }
 </script>
 
