@@ -2,37 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login - Fitness Buddy</title>
   <link rel="stylesheet" href="login.css">
 </head>
 <body>
   <div class="auth-container">
     <div class="card">
-      <h1>Welcome Back to <span><a href="Index.html">Your Fitness Buddy</a></span></h1>
+      <h1>Welcome Back to <span><a href="index.html">Your Fitness Buddy</a></span></h1>
       <p class="subtitle">Login to continue your fitness journey</p>
 
-      <div class="input-group">
-        <input type="email" id="loginEmail" placeholder="Email Address" required>
-        <input type="password" id="loginPassword" placeholder="Password" required>
+      <form id="loginForm" onsubmit="event.preventDefault(); login(event);">
+        <div class="input-group">
+          <input type="email" id="loginEmail" placeholder="Email Address" required>
+          <input type="password" id="loginPassword" placeholder="Password" required>
 
-        <button class="primary-btn" type="button" onclick="login()">Login</button>
-      </div>
-
+          <button class="primary-btn" type="submit">Login</button>
+        </div>
+      </form>
+      
       <div class="divider">
         <span>OR</span>
       </div>
 
       <button class="google-btn" type="button" onclick="googleLogin()">
-        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo">
         Continue with Google
       </button>
 
       <p class="footer-text">
-        Don’t have an account? <a href="Signin.html">Create one</a>
+        Don't have an account? <a href="Signin.html">Create one</a>
       </p>
     </div>
   </div>
+  
 
+  <!-- Make sure this matches your actual filename exactly -->
   <script type="module" src="firebase.js"></script>
 </body>
 </html>

@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Sign Up / Login - Fitness Buddy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - Fitness Buddy</title>
   <link rel="stylesheet" href="Sign.css">
 </head>
 <body> 
@@ -11,19 +12,21 @@
       <h1>Welcome to <span>Your Fitness Buddy</span></h1>
       <p class="subtitle">Start your personalized fitness journey today</p>
 
-      <div class="input-group">
-        <input type="text" id="username" placeholder="Full Name" required>
-        <input type="email" id="email" placeholder="Email Address" required>
-        <input type="tel" id="mobile" placeholder="Mobile Number" required>
-        <input type="password" id="password" placeholder="Password" required>
-        
-        <button class="primary-btn" onclick="signup()">Create Account</button>
-      </div>
+      <form id="signupForm" onsubmit="event.preventDefault(); signup();">
+        <div class="input-group">
+          <input type="text" id="username" placeholder="Full Name" required>
+          <input type="email" id="email" placeholder="Email Address" required>
+          <input type="tel" id="mobile" placeholder="Mobile Number" required>
+          <input type="password" id="password" placeholder="Password" minlength="6" required>
+          
+          <button class="primary-btn" type="submit">Create Account</button>
+        </div>
+      </form>
 
       <div class="divider"><span>OR</span></div>
 
       <button class="google-btn" type="button" onclick="googleLogin()">
-        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo">
         Continue with Google
       </button>
 
@@ -33,6 +36,7 @@
     </div>
   </div>
 
+  <!-- Make sure this matches your actual filename exactly -->
   <script type="module" src="firebase.js"></script>
 </body>
 </html>
