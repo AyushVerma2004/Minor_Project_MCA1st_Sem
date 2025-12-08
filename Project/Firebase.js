@@ -150,10 +150,14 @@ window.login = async function (event) {
     console.log("Login successful:", userCredential.user.email);
     
     alert("Login Successful!");
+<<<<<<< HEAD
     
     // Redirect immediately
     window.location.href = "index.html";
     
+=======
+    window.location.href = "homepage.html";   
+>>>>>>> 072560e90a7f11bad6fde0dbc21f54768a5c52cb
   } catch (error) {
     console.error("Login Error:", error);
     console.error("Error code:", error.code);
@@ -221,12 +225,16 @@ window.googleLogin = async function () {
 
     console.log("User data saved successfully");
     alert("Welcome " + user.displayName + "!");
+<<<<<<< HEAD
 
     // Clear any existing timeouts
     console.log("Redirecting to index.html...");
     
     // Use replace to avoid back button issues
     window.location.replace("index.html");
+=======
+    window.location.href = "homepage.html"; // Redirect after success
+>>>>>>> 072560e90a7f11bad6fde0dbc21f54768a5c52cb
 
   } catch (error) {
     console.error("Google Login Error:", error);
