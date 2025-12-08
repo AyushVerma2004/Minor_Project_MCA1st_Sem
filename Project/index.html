@@ -41,75 +41,39 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* User Profile Section */
-    .user-profile {
-      position: absolute;
-      top: 20px;
-      right: 25px;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      background: rgba(255, 255, 255, 0.1);
-      padding: 10px 20px;
-      border-radius: 50px;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    }
+    /* User Profile / Auth Section */
+    
 
-    .user-info {
+    .auth-buttons {
       display: flex;
-      align-items: center;
       gap: 10px;
     }
 
-    .user-avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #00C9A7, #00A98F);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
-      font-size: 1rem;
-      color: #fff;
-      box-shadow: 0 2px 8px rgba(0, 201, 167, 0.4);
-    }
-
-    .user-avatar img {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-
-    .user-name {
-      font-size: 0.95rem;
-      font-weight: 500;
-      color: #ffffff;
-      max-width: 150px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .logout-btn {
+    .auth-btn {
       padding: 8px 18px;
-      border: none;
       border-radius: 20px;
-      background: linear-gradient(135deg, #ff4757, #e84118);
-      color: #fff;
+      border: none;
       font-size: 0.9rem;
+      font-weight: 500;
       cursor: pointer;
+      text-decoration: none;
       transition: 0.3s ease;
-      font-weight: 600;
-      box-shadow: 0 4px 12px rgba(255, 71, 87, 0.3);
     }
 
-    .logout-btn:hover {
-      background: linear-gradient(135deg, #e84118, #c23616);
-      transform: scale(1.05);
-      box-shadow: 0 6px 16px rgba(255, 71, 87, 0.5);
+    .login-btn {
+      background: transparent;
+      color: #ffffff;
+      border: 1px solid #ffffff;
+    }
+
+    .signup-btn {
+      background-color: #00C9A7;
+      color: #ffffff;
+    }
+
+    .auth-btn:hover {
+      transform: scale(1.04);
+      opacity: 0.9;
     }
 
     h1 {
@@ -279,19 +243,19 @@
   </div>
 
   <div class="container">
-    <!-- User Profile Section -->
-    <div class="user-profile">
-      <div class="user-info">
-        <div class="user-avatar" id="userAvatar">
-          <span id="avatarInitial">U</span>
-        </div>
-        <span class="user-name" id="userName">Loading...</span>
+    <!-- ...existing code... -->
+    <!-- Removed username/avatar display. Kept auth buttons only. -->
+    <div class="auth-area">
+      <div class="auth-buttons">
+        <a href="login.html" class="auth-btn login-btn">Login</a>
+        <a href="Signin.html" class="auth-btn signup-btn">Sign Up</a>
       </div>
-      <button class="logout-btn" onclick="logout()">Logout</button>
     </div>
 
     <h1>Welcome to <span>Your Fitness Buddy</span></h1>
-    <p id="welcomeMessage">Your personalized space to track workouts, stay motivated, and transform your fitness journey.</p>
+    <p id="welcomeMessage">
+      Your personalized space to track workouts, stay motivated, and transform your fitness journey.
+    </p>
 
     <section class="features">
       <div class="feature-card">
@@ -312,7 +276,6 @@
         <a href="Progress.html"><button class="btn" style="margin-top:15px;width:100%;">Explore</button></a>
       </div>
 
-
       <div class="feature-card">
         <h3>📈 Specific Training</h3>
         <p>Train any muscle group with guided levels.</p>
@@ -330,26 +293,24 @@
         <p>Add Goals Accomplish them.</p>
         <a href="Goaltracker.html"><button class="btn" style="margin-top:15px;width:100%;">Explore</button></a>
       </div>
+
       <div class="feature-card">
         <h3>Resources and Tutorials</h3>
-        <p>Daily workout tutotorials and fitness related articles</p>
+        <p>Daily workout tutorials and fitness related articles</p>
         <a href="Resources.html"><button class="btn" style="margin-top:15px;width:100%;">Explore</button></a>
-        </div>
+      </div>
     </section>
-
 
     <footer>
       © 2025 Your Fitness Buddy | <a href="#">Privacy Policy</a>
     </footer>
-
   </div>
-
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
-
+    // Removed Firestore usage since username display was removed
+    // ...existing code...
     const firebaseConfig = {
       apiKey: "AIzaSyAWCLISIOyr4nHjJ2URuqD84EWAyHXBgDM",
       authDomain: "your-fitness-buddy-login.firebaseapp.com",
@@ -362,81 +323,34 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    const db = getFirestore(app);
 
-    // Show loading
     const loading = document.getElementById('loading');
     loading.classList.add('active');
 
-    // Check authentication status
-    onAuthStateChanged(auth, async (user) => {
-      if (!user) {
-        // Not logged in, redirect to login
-        window.location.replace("login.html");
-      } else {
-        // User is logged in
+    // Simplified auth state handler: do not update any username or welcome text
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
         console.log("User authenticated:", user.email);
-        
-        // Get user display name
-        let displayName = user.displayName || user.email.split('@')[0];
-        
-        // Try to get name from Firestore
-        try {
-          const userDoc = await getDoc(doc(db, "users", user.uid));
-          if (userDoc.exists()) {
-            const userData = userDoc.data();
-            if (userData.name) {
-              displayName = userData.name;
-            }
-          }
-        } catch (error) {
-          console.error("Error fetching user data:", error);
-        }
-
-        // Update UI with user info
-        const userNameEl = document.getElementById('userName');
-        const avatarInitialEl = document.getElementById('avatarInitial');
-        const userAvatarEl = document.getElementById('userAvatar');
-        const welcomeMessageEl = document.getElementById('welcomeMessage');
-
-        if (userNameEl) {
-          userNameEl.textContent = displayName;
-        }
-
-        if (welcomeMessageEl) {
-          welcomeMessageEl.textContent = `Welcome back, ${displayName}! Your personalized space to track workouts, stay motivated, and transform your fitness journey.`;
-        }
-
-        // Set avatar
-        if (user.photoURL) {
-          // If user has Google photo
-          userAvatarEl.innerHTML = `<img src="${user.photoURL}" alt="Profile">`;
-        } else if (avatarInitialEl) {
-          // Show first letter of name
-          avatarInitialEl.textContent = displayName.charAt(0).toUpperCase();
-        }
-
-        // Hide loading
-        loading.classList.remove('active');
       }
+      loading.classList.remove('active');
     });
   </script>
 
   <script type="module" src="firebase.js"></script>
 
   <script>
-  // Check login status
-  const isLoggedIn = localStorage.getItem("isLoggedIn");
+    // Check login status
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
 
-  // Select all feature-card buttons
-  document.querySelectorAll(".feature-card a").forEach(card => {
-    card.addEventListener("click", function (e) {
-      if (!isLoggedIn) {
-        e.preventDefault(); 
-        window.location.href = "login.html"; 
-      }
+    // Guard feature-card navigation for non-logged users
+    document.querySelectorAll(".feature-card a").forEach(card => {
+      card.addEventListener("click", function (e) {
+        if (!isLoggedIn) {
+          e.preventDefault();
+          window.location.href = "login.html";
+        }
+      });
     });
-  });
-</script>
+  </script>
 </body>
 </html>

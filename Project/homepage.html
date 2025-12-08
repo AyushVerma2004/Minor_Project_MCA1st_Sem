@@ -1,218 +1,274 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Your Fitness Buddy — Home</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Fitness Buddy — Home</title>
 
-<style>
-:root{
-  --bg:#0f1724;
-  --card:#0b1220;
-  --muted:#94a3b8;
-  --accent:#ff6b6b;
-  --accent-2:#60a5fa;
-  --glass:rgba(255,255,255,0.04);
-  --radius:16px;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto;
-}
+  <style>
+    :root{
+      --bg:#0f1724;
+      --card:#0b1220;
+      --muted:#94a3b8;
+      --accent:#ff6b6b;
+      --accent-2:#60a5fa;
+      --glass:rgba(255,255,255,0.04);
+      --radius:16px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto;
+    }
 
-*{box-sizing:border-box; margin:0; padding:0;}
+    *{box-sizing:border-box; margin:0; padding:0;}
 
-body{
-  background:linear-gradient(180deg,var(--bg),#071020);
-  color:#e6eef8;
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  padding:30px;
-}
+    body{
+      background:linear-gradient(180deg,var(--bg),#071020);
+      color:#e6eef8;
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      padding:30px;
+    }
 
-/* Main container */
-.container{
-  width:100%;
-  max-width:1200px;
-  background:var(--glass);
-  padding:40px 30px;
-  border-radius:var(--radius);
-  box-shadow:0 8px 30px rgba(0,0,0,0.4);
-  backdrop-filter:blur(10px);
-  animation:fadeIn .8s ease;
-  text-align:center;
-}
+    /* Main container */
+    .container{
+      width:100%;
+      max-width:1200px;
+      background:var(--glass);
+      padding:40px 30px;
+      border-radius:var(--radius);
+      box-shadow:0 8px 30px rgba(0,0,0,0.4);
+      backdrop-filter:blur(10px);
+      animation:fadeIn .8s ease;
+    }
 
-@keyframes fadeIn{
-  from{opacity:0; transform:translateY(20px);}
-  to{opacity:1; transform:translateY(0);}
-}
+    @keyframes fadeIn{
+      from{opacity:0; transform:translateY(20px);}
+      to{opacity:1; transform:translateY(0);}
+    }
 
-/* Header */
-.header-logo{
-  display:flex;
-  gap:12px;
-  justify-content:center;
-  align-items:center;
-  margin-bottom:20px;
-}
+    /* Header wrapper: logo left, logout right */
+    .header-bar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:20px;
+    }
 
-.header-logo .mark{
-  width:60px;
-  height:60px;
-  border-radius:14px;
-  background:linear-gradient(135deg,var(--accent),var(--accent-2));
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:30px;
-  box-shadow:0 6px 20px rgba(2,6,23,0.6);
-}
+    /* Header logo */
+    .header-logo{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
 
-h1{
-  margin:0;
-  font-size:26px;
-}
+    .header-logo .mark{
+      width:60px;
+      height:60px;
+      border-radius:14px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:30px;
+      box-shadow:0 6px 20px rgba(2,6,23,0.6);
+    }
 
-.subtitle{
-  color:var(--muted);
-  margin:5px 0 25px 0;
-}
+    h1{
+      margin:0;
+      font-size:26px;
+    }
 
-/* Features grid */
-.features{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-  gap:22px;
-  margin-top:20px;
-}
+    .subtitle{
+      color:var(--muted);
+      margin:5px 0 0 0;
+      font-size:14px;
+    }
 
-.feature-card{
-  background:linear-gradient(180deg,var(--card),var(--glass));
-  padding:20px;
-  border-radius:var(--radius);
-  border:1px solid rgba(255,255,255,0.05);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  text-align:center;
-  transition:0.25s;
-  cursor:pointer;
-}
+    /* Logout button */
+    .logout-btn {
+      padding: 8px 18px;
+      border: none;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #ff4757, #e84118);
+      color: #fff;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: 0.3s ease;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(255, 71, 87, 0.3);
+    }
 
-.feature-card:hover{
-  transform:scale(1.05);
-  background:linear-gradient(180deg,var(--card),rgba(255,255,255,0.06));
-}
+    .logout-btn:hover {
+      background: linear-gradient(135deg, #e84118, #c23616);
+      transform: scale(1.05);
+      box-shadow: 0 6px 16px rgba(255, 71, 87, 0.5);
+    }
 
-.feature-card h3{
-  font-size:17px;
-  margin-bottom:10px;
-  background:linear-gradient(90deg,var(--accent),var(--accent-2));
-  -webkit-background-clip:text;
-  color:transparent;
-}
+    /* Features grid */
+    .features{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+      gap:22px;
+      margin-top:20px;
+    }
 
-.feature-card p{
-  color:var(--muted);
-  font-size:14px;
-  margin-bottom:16px;
-}
+    .feature-card{
+      background:linear-gradient(180deg,var(--card),var(--glass));
+      padding:20px;
+      border-radius:var(--radius);
+      border:1px solid rgba(255,255,255,0.05);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      text-align:center;
+      transition:0.25s;
+      cursor:pointer;
+    }
 
-/* Buttons */
-.btn{
-  padding:10px 20px;
-  width:100%;
-  border:none;
-  border-radius:10px;
-  background:linear-gradient(90deg,var(--accent),var(--accent-2));
-  color:#071020;
-  font-weight:600;
-  font-size:14px;
-  cursor:pointer;
-  transition:.25s;
-}
+    .feature-card:hover{
+      transform:scale(1.05);
+      background:linear-gradient(180deg,var(--card),rgba(255,255,255,0.06));
+    }
 
-.btn:hover{
-  transform:scale(1.07);
-}
+    .feature-card h3{
+      font-size:17px;
+      margin-bottom:10px;
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      -webkit-background-clip:text;
+      color:transparent;
+    }
 
-/* Footer */
-footer{
-  margin-top:30px;
-  color:var(--muted);
-  font-size:14px;
-}
-footer a{
-  color:var(--accent-2);
-}
-</style>
+    .feature-card p{
+      color:var(--muted);
+      font-size:14px;
+      margin-bottom:16px;
+    }
+
+    /* Buttons */
+    .btn{
+      padding:10px 20px;
+      width:100%;
+      border:none;
+      border-radius:10px;
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      color:#071020;
+      font-weight:600;
+      font-size:14px;
+      cursor:pointer;
+      transition:.25s;
+    }
+
+    .btn:hover{
+      transform:scale(1.07);
+    }
+
+    /* Footer */
+    footer{
+      margin-top:30px;
+      color:var(--muted);
+      font-size:14px;
+      text-align:center;
+    }
+    footer a{
+      color:var(--accent-2);
+      text-decoration:none;
+    }
+    footer a:hover{
+      text-decoration:underline;
+    }
+
+    @media (max-width:640px){
+      .header-bar{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:10px;
+      }
+    }
+  </style>
 </head>
 
 <body>
-<div class="container">
+  <div class="container">
 
-  <!-- Header -->
-  <div class="header-logo">
-    <div class="mark">💪</div>
-    <div>
-      <h1>Your Fitness Buddy</h1>
-      <div class="subtitle">Transform your fitness journey — one step at a time</div>
+    <!-- Header with Logout -->
+    <div class="header-bar">
+      <div class="header-logo">
+        <div class="mark">💪</div>
+        <div>
+          <h1>Your Fitness Buddy</h1>
+          <div class="subtitle">Transform your fitness journey — one step at a time</div>
+        </div>
+      </div>
+
+      <button class="logout-btn" onclick="handleLogout()">Logout</button>
     </div>
+
+    <!-- Feature Cards -->
+    <section class="features">
+
+      <div class="feature-card">
+        <h3>Personalized Workout Plans</h3>
+        <p>Custom workout routines based on your goals.</p>
+        <a href="Survey.html"><button class="btn">Explore</button></a>
+      </div>
+
+      <div class="feature-card">
+        <h3>Nutrition Guidance</h3>
+        <p>Track calories, macros & maintain balance.</p>
+        <a href="Nutrition.html"><button class="btn">Explore</button></a>
+      </div>
+
+      <div class="feature-card">
+        <h3>Progress Tracking</h3>
+        <p>Visual charts to track your achievements.</p>
+        <a href="Progress.html"><button class="btn">Explore</button></a>
+      </div>
+
+      <div class="feature-card">
+        <h3>Specific Muscle Training</h3>
+        <p>Select body part & get guided exercises.</p>
+        <a href="Particular.html"><button class="btn">Explore</button></a>
+      </div>
+
+      <div class="feature-card">
+        <h3>Create Weekly Plan</h3>
+        <p>Build your own weekly workout plan.</p>
+        <a href="Progress.html"><button class="btn">Explore</button></a>
+      </div>
+
+      <div class="feature-card">
+        <h3>Goal Tracker</h3>
+        <p>Set goals and smash them one by one.</p>
+        <a href="Goaltracker.html"><button class="btn">Explore</button></a>
+      </div>
+
+      <div class="feature-card">
+        <h3>Resources and Tutorials</h3>
+        <p>Daily workout tutorials and fitness related articles</p>
+        <a href="Resources.html">
+          <button class="btn" style="margin-top:15px;width:100%;">Explore</button>
+        </a>
+      </div>
+
+    </section>
+
+    <footer>
+      © 2025 Your Fitness Buddy • <a href="#">Privacy Policy</a>
+    </footer>
   </div>
 
-  <!-- Feature Cards -->
-  <section class="features">
+  <script>
+    function handleLogout() {
+      // If using Firebase Auth, call signOut() here.
+      // Example:
+      // auth.signOut().then(() => {
+      //   localStorage.removeItem("isLoggedIn");
+      //   window.location.href = "login.html";
+      // });
 
-    <div class="feature-card">
-      <h3>Personalized Workout Plans</h3>
-      <p>Custom workout routines based on your goals.</p>
-      <a href="Survey.html"><button class="btn">Explore</button></a>
-    </div>
-
-    <div class="feature-card">
-      <h3>Nutrition Guidance</h3>
-      <p>Track calories, macros & maintain balance.</p>
-      <a href="Nutrition.html"><button class="btn">Explore</button></a>
-    </div>
-
-    <div class="feature-card">
-      <h3>Progress Tracking</h3>
-      <p>Visual charts to track your achievements.</p>
-      <a href="Progress.html"><button class="btn">Explore</button></a>
-    </div>
-
-    <div class="feature-card">
-      <h3>Specific Muscle Training</h3>
-      <p>Select body part & get guided exercises.</p>
-      <a href="Particular.html"><button class="btn">Explore</button></a>
-    </div>
-
-    <div class="feature-card">
-      <h3>Create Weekly Plan</h3>
-      <p>Build your own weekly workout plan.</p>
-      <a href="Progress.html"><button class="btn">Explore</button></a>
-    </div>
-
-    <div class="feature-card">
-  <h3>Goal Tracker</h3>
-  <p>Set goals and smash them one by one.</p>
-  <a href="Goaltracker.html"><button class="btn">Explore</button></a>
-</div>
-
-<div class="feature-card">
-  <h3>Resources and Tutorials</h3>
-  <p>Daily workout tutotorials and fitness related articles</p>
-  <a href="Resources.html">
-    <button class="btn" style="margin-top:15px;width:100%;">Explore</button>
-  </a>
-</div>
-
-    </div>
-
-  </section>
-
-  <footer>
-    © 2025 Your Fitness Buddy • <a href="#">Privacy Policy</a>
-  </footer>
-</div>
+      // Simple fallback if you are only using localStorage:
+      localStorage.removeItem("isLoggedIn");
+      window.location.href = "login.html";
+    }
+  </script>
 </body>
 </html>

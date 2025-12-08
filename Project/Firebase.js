@@ -11,13 +11,15 @@ import {
   signOut,
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
-
 import {
   getFirestore,
   setDoc,
-  doc
+  doc,
+  collection,
+  addDoc,
+  getDocs,
+  query
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
-
 
 // ---------------- FIREBASE CONFIG ----------------
 const firebaseConfig = {
@@ -30,46 +32,25 @@ const firebaseConfig = {
   measurementId: "G-S5CNQJ1F77"
 };
 
-
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
-
-// Force account selection every time
-provider.setCustomParameters({
-  prompt: 'select_account'
-});
-
+provider.setCustomParameters({ prompt: 'select_account' });
 
 // ----------------------------------------------------
-//                 SIGN UP FUNCTION
+// SIGN UP
 // ----------------------------------------------------
-window.signup = async function () {
-  const name = document.getElementById("username").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const mobile = document.getElementById("mobile").value.trim();
-  const password = document.getElementById("password").value.trim();
-
-  if (!name || !email || !password || !mobile) {
-    alert("Please fill all fields!");
-    return;
-  }
-
-  // Validate email format
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
-    alert("Please enter a valid email address!");
-    return;
-  }
-
-  // Validate password length
-  if (password.length < 6) {
-    alert("Password must be at least 6 characters long!");
-    return;
-  }
-
+export async function signup(name, email, mobile, password) {
   try {
+    if (!name || !email || !mobile || !password)
+      throw new Error("All fields are required");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+      throw new Error("Invalid email format");
+    if (password.length < 6)
+      throw new Error("Password must be at least 6 characters");
+
     const userCred = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCred.user;
 
@@ -86,8 +67,7 @@ window.signup = async function () {
 
   } catch (error) {
     console.error("Signup Error:", error);
-    
-    // More specific error messages
+
     if (error.code === "auth/email-already-in-use") {
       alert("This email is already registered. Please login instead.");
     } else if (error.code === "auth/weak-password") {
@@ -98,115 +78,75 @@ window.signup = async function () {
       alert("Signup Failed: " + error.message);
     }
   }
-};
-
+}
 
 // ----------------------------------------------------
-//                  LOGIN FUNCTION
+// LOGIN FUNCTION
 // ----------------------------------------------------
 window.login = async function (event) {
-  // Prevent form submission if called from a form
-  if (event) {
-    event.preventDefault();
-  }
+  if (event) event.preventDefault();
 
-  const emailInput = document.getElementById("loginEmail");
-  const passwordInput = document.getElementById("loginPassword");
-  
-  if (!emailInput || !passwordInput) {
-    console.error("Email or password input field not found");
-    return;
-  }
-
-  const email = emailInput.value.trim();
-  const password = passwordInput.value.trim();
+  const email = document.getElementById("loginEmail")?.value.trim();
+  const password = document.getElementById("loginPassword")?.value.trim();
 
   if (!email || !password) {
     alert("Please enter email and password!");
     return;
   }
 
-  // Find the login button
   let loginButton = event?.target;
   if (loginButton && loginButton.tagName !== 'BUTTON') {
     loginButton = document.querySelector('.primary-btn');
   }
 
-  // Disable the login button to prevent double-clicks
   if (loginButton) {
     loginButton.disabled = true;
-    const originalText = loginButton.textContent;
+    loginButton.dataset.originalText = loginButton.textContent;
     loginButton.textContent = "Logging in...";
-    
-    // Store original text for later
-    loginButton.dataset.originalText = originalText;
   }
 
   try {
-    console.log("Attempting login for:", email);
-    
-    // Sign in with Firebase
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    console.log("Login successful:", userCredential.user.email);
-    
     alert("Login Successful!");
-
-    
-window.location.href = "homepage.html";
+    window.location.href = "homepage.html";
 
   } catch (error) {
     console.error("Login Error:", error);
-    console.error("Error code:", error.code);
-    
-    // Re-enable button on error
+
     if (loginButton) {
       loginButton.disabled = false;
-      loginButton.textContent = loginButton.dataset.originalText || "Login";
+      loginButton.textContent = loginButton.dataset.originalText;
     }
-    
-    // Better error handling for login
+
     if (error.code === "auth/invalid-credential") {
-      alert("Invalid email or password. Please check your credentials and try again.");
+      alert("Invalid email or password.");
     } else if (error.code === "auth/user-not-found") {
-      alert("No account found with this email. Please sign up first.");
+      alert("No account found with this email.");
     } else if (error.code === "auth/wrong-password") {
-      alert("Incorrect password. Please try again.");
-    } else if (error.code === "auth/invalid-email") {
-      alert("Invalid email format.");
+      alert("Incorrect password.");
     } else if (error.code === "auth/too-many-requests") {
-      alert("Too many failed login attempts. Please try again later or reset your password.");
-    } else if (error.code === "auth/network-request-failed") {
-      alert("Network error. Please check your internet connection.");
+      alert("Too many attempts. Try later.");
     } else {
       alert("Login Failed: " + error.message);
     }
   }
 };
 
-
 // ----------------------------------------------------
-//                 GOOGLE LOGIN (Both pages)
+// GOOGLE LOGIN
 // ----------------------------------------------------
 window.googleLogin = async function () {
-  console.log("Google login button clicked");
-  
-  // Disable the Google button to prevent double clicks
   const googleBtn = document.querySelector('.google-btn');
+
   if (googleBtn) {
     googleBtn.disabled = true;
     googleBtn.style.opacity = '0.6';
-    googleBtn.style.cursor = 'not-allowed';
   }
-  
+
   try {
-    console.log("Attempting Google sign in popup...");
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
-    
-    console.log("Google sign in successful:", user.email);
 
-    // Save user data to Firestore
-    console.log("Saving user data to Firestore...");
     await setDoc(
       doc(db, "users", user.uid),
       {
@@ -219,83 +159,83 @@ window.googleLogin = async function () {
       { merge: true }
     );
 
-    console.log("User data saved successfully");
     alert("Welcome " + user.displayName + "!");
-
-window.location.href = "homepage.html"; // Redirect after success
-
+    window.location.href = "homepage.html";
 
   } catch (error) {
     console.error("Google Login Error:", error);
-    console.error("Error code:", error.code);
-    console.error("Error message:", error.message);
-    
-    // Re-enable button on error
+
     if (googleBtn) {
       googleBtn.disabled = false;
       googleBtn.style.opacity = '1';
-      googleBtn.style.cursor = 'pointer';
     }
-    
-    // Handle Google login specific errors
-    if (error.code === "auth/popup-closed-by-user") {
-      alert("Login cancelled. Please try again.");
-    } else if (error.code === "auth/popup-blocked") {
-      alert("Popup was blocked. Please allow popups for this site and try again.");
-    } else if (error.code === "auth/cancelled-popup-request") {
-      console.log("Popup request cancelled - another popup may be open");
-    } else if (error.code === "auth/account-exists-with-different-credential") {
-      alert("An account already exists with this email using a different sign-in method.");
-    } else {
-      alert("Google Login Failed: " + error.message);
-    }
+
+    alert("Google Login Failed: " + error.message);
   }
 };
 
-
 // ----------------------------------------------------
-//                 LOGOUT FUNCTION
+// LOGOUT
 // ----------------------------------------------------
 window.logout = async function () {
   try {
     await signOut(auth);
-    alert("You have been logged out successfully!");
-    window.location.href = "login.html";
+    alert("Logged out successfully!");
+    window.location.href = "index.html";
   } catch (error) {
-    console.error("Logout Error:", error);
-    alert("Error logging out: " + error.message);
+    alert("Logout Error: " + error.message);
   }
 };
 
-
 // ----------------------------------------------------
-//          CHECK AUTH STATUS
+// CHECK AUTH STATUS
 // ----------------------------------------------------
 window.checkAuthStatus = function () {
   return new Promise((resolve) => {
-    onAuthStateChanged(auth, (user) => {
-      resolve(user);
-    });
+    onAuthStateChanged(auth, resolve);
   });
 };
 
-
 // ----------------------------------------------------
-//     GET CURRENT USER INFO
+// CURRENT USER
 // ----------------------------------------------------
-window.getCurrentUser = function () {
+export function getCurrentUser() {
   return auth.currentUser;
-};
-
+}
 
 // ----------------------------------------------------
-//          AUTH STATE OBSERVER (REMOVED AUTO-REDIRECT)
+// FIRESTORE FUNCTIONS
 // ----------------------------------------------------
-// Only log auth state, don't auto-redirect
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    console.log("User is signed in:", user.email);
-  } else {
-    console.log("No user signed in");
-  }
+export async function saveWorkout(userId, workout) {
+  if (!userId) throw new Error("User ID required");
+  const docRef = await addDoc(collection(db, "users", userId, "workouts"), workout);
+  return docRef.id;
+}
+
+export async function saveGoal(userId, goal) {
+  if (!userId) throw new Error("User ID required");
+  const docRef = await addDoc(collection(db, "users", userId, "goals"), goal);
+  return docRef.id;
+}
+
+export async function getWorkouts(userId) {
+  if (!userId) throw new Error("User ID required");
+  const q = query(collection(db, "users", userId, "workouts"));
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+}
+
+export async function getGoals(userId) {
+  if (!userId) throw new Error("User ID required");
+  const q = query(collection(db, "users", userId, "goals"));
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+}
+
+// ----------------------------------------------------
+// AUTH OBSERVER
+// ----------------------------------------------------
+onAuthStateChanged(auth, user => {
+  if (user) console.log("User signed in:", user.email);
+  else console.log("No user signed in");
 });
