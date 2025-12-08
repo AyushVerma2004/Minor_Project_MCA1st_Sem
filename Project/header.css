@@ -1,0 +1,163 @@
+/* --- Global & Theme Setup --- */
+:root {
+    --dark-bg: #1a1a2e; /* Deep Dark Navy/Slate */
+    --accent-teal: #00e6c3; /* Bright Teal/Aqua from the image */
+    --light-text: #f0f0f0;
+    --card-bg: #2c2c44; /* Slightly lighter for elements */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #0d0d1a; /* Even darker background for contrast */
+}
+
+/* --- Header & Navbar Styling --- */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    background-color: var(--dark-bg);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Premium shadow effect */
+    color: var(--light-text);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: var(--accent-teal);
+    letter-spacing: 1px;
+}
+
+.logo i {
+    font-size: 1.2em;
+    margin-right: 5px;
+}
+
+/* --- Center Motivational Quote Styling --- */
+.center-quote {
+    flex-grow: 1; /* Allows it to take up the center space */
+    text-align: center;
+    padding: 0 20px;
+    font-style: italic;
+    color: #b3b3e6; /* Subtly lighter color for the quote */
+    font-size: 1em;
+    max-width: 50%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; /* Handle overflow gracefully */
+}
+
+/* --- Dropdown Container Styling --- */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    background-color: transparent;
+    color: var(--light-text);
+    padding: 10px 15px;
+    font-size: 1.1em;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s;
+    border-radius: 5px;
+}
+
+.dropbtn:hover {
+    color: var(--accent-teal); /* Highlight on hover */
+}
+
+.dropbtn i {
+    margin-left: 5px;
+    transition: transform 0.3s;
+}
+
+/* --- Dropdown Menu Content Styling --- */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0; /* Align dropdown to the right */
+    background-color: var(--card-bg);
+    min-width: 250px;
+    box-shadow: 0 8px 16px 0px rgba(0,0,0,0.6);
+    z-index: 1;
+    border-radius: 8px;
+    padding: 10px 0;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.dropdown-content a {
+    color: var(--light-text);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s, color 0.3s;
+    font-size: 0.95em;
+}
+
+.dropdown-content a:hover {
+    background-color: var(--dark-bg); /* Darker hover background */
+    color: var(--accent-teal);
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Divider for Logout */
+.divider {
+    height: 1px;
+    background-color: #3f3f5a;
+    margin: 8px 16px;
+}
+
+/* Specific styling for the Log Out link */
+.logout-link {
+    color: #ff6b6b !important; /* Standout color for important action */
+    font-weight: bold;
+}
+
+.logout-link:hover {
+    background-color: #570f0f !important; /* Dark red background for contrast */
+}
+
+.logout-link i {
+    margin-right: 8px;
+}
+
+/* --- Responsiveness: Mobile View --- */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 15px 3%;
+    }
+
+    .center-quote {
+        display: none; /* Hide quote on small screens to prioritize links */
+    }
+
+    .logo {
+        font-size: 1.5em;
+    }
+
+    .dropdown-content {
+        min-width: 200px;
+        left: 0; /* Align to the left edge of the button on mobile */
+        right: auto;
+    }
+}

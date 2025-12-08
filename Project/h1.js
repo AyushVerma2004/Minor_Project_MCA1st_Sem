@@ -1,7 +1,5 @@
-// script.js
-
-// Array of motivational fitness quotes
-const fitnessQuotes = [
+document.addEventListener('DOMContentLoaded', () => {
+    const quotes = [
     "Push yourself because no one else is going to do it for you.",
     "Strive for progress, not perfection.",
     "Sweat now, shine later.",
@@ -17,16 +15,16 @@ const fitnessQuotes = [
     "Be stronger than your excuses.",
     "Success starts with self-discipline.",
     "Fitness is like a relationship. You can’t cheat and expect it to work."
-];
+    ];
 
-// Function to display a random quote
-function displayRandomQuote() {
-    const randomQuote = fitnessQuotes[Math.floor(Math.random() * fitnessQuotes.length)];
-    document.getElementById('motivational-quote').textContent = randomQuote;
-}
+    const quoteElement = document.getElementById('motivational-quote');
 
-// Initial display
-displayRandomQuote();
+    // Function to get a random quote
+    const getRandomQuote = () => {
+        const randomIndex = Math.floor(Math.random() * quotes.length);
+        return quotes[randomIndex];
+    };
 
-// Change quote every 10 seconds
-setInterval(displayRandomQuote, 10000);
+    // Set the quote on page load/refresh
+    quoteElement.textContent = getRandomQuote();
+});

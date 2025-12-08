@@ -94,6 +94,23 @@ input:focus {
   transform: none;
 }
 
+.primary-btn {
+      background: #0095ff;
+      color: white;
+      font-weight: 600;
+      padding: 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.2s;
+      border: none;
+      margin-top: 10px;
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 12px rgba(0,149,255,0.45);
+    }
+
 
 .divider {
   display: flex;
