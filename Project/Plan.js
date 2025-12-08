@@ -1,6 +1,88 @@
+// -------------------------
+// 0. PROGRESS BAR — UPDATES AS USER COMPLETES FIELDSETS
+// -------------------------
+
+const steps = document.querySelectorAll("fieldset");
+const progressBar = document.getElementById("progressBar");
+
+let currentStep = 0;
+
+function updateProgress() {
+  const percent = ((currentStep + 1) / steps.length) * 100;
+  progressBar.style.width = percent + "%";
+}
+
+steps.forEach((fs, i) => {
+  fs.addEventListener("change", () => {
+    currentStep = i;
+    updateProgress();
+  });
+});
+
+// -------------------------
+// Checkbox GLOW effect
+// -------------------------
+document.querySelectorAll("input[type='checkbox']").forEach(cb => {
+  cb.addEventListener("change", () => {
+    if (cb.checked) {
+      cb.parentElement.style.boxShadow = "0 0 10px #0b84ff";
+    } else {
+      cb.parentElement.style.boxShadow = "none";
+    }
+  });
+});
+
+// -------------------------
+// Fieldset ANIMATION on change
+// -------------------------
+steps.forEach(fs => {
+  fs.addEventListener("change", () => {
+    fs.style.animation = "pulse 0.4s ease";
+    setTimeout(() => fs.style.animation = "", 400);
+  });
+});
+
+// Add animation style
+const style = document.createElement("style");
+style.innerHTML = `
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+`;
+document.head.appendChild(style);
+
+
+// -------------------------
+// SUCCESS ANIMATION + REDIRECT
+// -------------------------
+const form = document.getElementById("surveyForm");
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  // Success animation box
+  const success = document.createElement("div");
+  success.innerHTML = "✔ Plan Created Successfully!";
+  success.className = "successAnimation";
+  document.body.appendChild(success);
+
+  success.style.opacity = "1";
+  success.style.transform = "scale(1)";
+
+  setTimeout(() => {
+    form.submit(); // actually go to next page
+  }, 1200);
+});
+
+
+// -------------------------
+//  YOUR ORIGINAL WORKOUT PLAN JS
+// -------------------------
+
 // Read survey data from URL
 const params = new URLSearchParams(window.location.search);
-
 const goal = params.get("goal");
 const fitness = params.get("fitness_level");
 const days = params.getAll("days");
@@ -10,7 +92,7 @@ const container = document.getElementById("workoutGrid");
 
 
 // -------------------------
-// 1. FULL DETAILED WORKOUT DATABASE
+// WORKOUT DATABASE
 // -------------------------
 
 const WORKOUTS = {
@@ -160,9 +242,8 @@ const WORKOUTS = {
 };
 
 
-
 // -------------------------
-// 2. INTENSITY MODIFIER BASED ON FITNESS LEVEL
+// Modify intensity based on level
 // -------------------------
 
 function modifyForLevel(exercises, level) {
@@ -179,9 +260,8 @@ function modifyForLevel(exercises, level) {
 }
 
 
-
 // -------------------------
-// 3. GENERATE AND DISPLAY PLAN
+// Generate workout plan
 // -------------------------
 
 let plan = WORKOUTS[goal] || WORKOUTS["Lose weight"];
@@ -190,7 +270,7 @@ let totalDays = days.length > 0 ? days.length : 6;
 container.innerHTML = "";
 
 for (let i = 0; i < totalDays; i++) {
-  const day = plan[i % plan.length]; // loop through plan
+  const day = plan[i % plan.length];
   const workoutHTML = modifyForLevel(day.exercises, fitness);
 
   container.innerHTML += `
@@ -200,3 +280,4 @@ for (let i = 0; i < totalDays; i++) {
     </div>
   `;
 }
+

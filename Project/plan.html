@@ -32,10 +32,10 @@
     </div>
   </main>
 
-  <!-- load plan.js (must be in same folder, same filename) -->
+
   <script src="Plan.js"></script>
 
-  <!-- small helper script to enable download/print without changing plan.js -->
+
   <script>
     // Wait until DOMContent loaded and plan.js has populated #workoutGrid
     document.addEventListener('DOMContentLoaded', () => {
@@ -43,7 +43,6 @@
       const printBtn = document.getElementById('printBtn');
       const grid = document.getElementById('workoutGrid');
 
-      // Download as simple .doc (Word will open it)
       downloadBtn.addEventListener('click', () => {
         // get printable HTML
         const headerHtml = '<h1>' + document.querySelector('header h1').innerText + '</h1>';
