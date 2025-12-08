@@ -1,5 +1,6 @@
-// Firebase.js (type="module")
+// firebase.js (type="module")
 
+// ---------------- FIREBASE IMPORTS ----------------
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 import {
   getAuth,
@@ -15,27 +16,27 @@ import {
   doc
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
-// Your Firebase configuration
+// ---------------- FIREBASE CONFIG ----------------
 const firebaseConfig = {
-  apiKey: "AIzaSyDRKFVQanh4Q4OF22K4HqlTu_fxaxtD5Sw",
-  authDomain: "your-fitness-buddy-5b325.firebaseapp.com",
-  projectId: "your-fitness-buddy-5b325",
-  storageBucket: "your-fitness-buddy-5b325.appspot.com",
-  messagingSenderId: "773971869699",
-  appId: "1:773971869699:web:2cbf98250a163f16d1ce36",
-  measurementId: "G-86R010QDXS"
+  apiKey: "AIzaSyAWCLISIOyr4nHjJ2URuqD84EWAyHXBgDM",
+  authDomain: "your-fitness-buddy-login.firebaseapp.com",
+  projectId: "your-fitness-buddy-login",
+  storageBucket: "your-fitness-buddy-login.firebasestorage.app",
+  messagingSenderId: "530314127734",
+  appId: "1:530314127734:web:09c1cae200b4b030d77257",
+  measurementId: "G-S5CNQJ1F77"
 };
 
-// Initialize Firebase
+// ---------------- INITIALIZE FIREBASE ----------------
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 
 
-// ------------------------
-// SIGN UP (Signin.html)
-// ------------------------
+// ----------------------------------------------------
+//                 SIGN UP FUNCTION
+// ----------------------------------------------------
 window.signup = async function () {
   const name = document.getElementById("username").value.trim();
   const email = document.getElementById("email").value.trim();
@@ -68,9 +69,9 @@ window.signup = async function () {
 };
 
 
-// ------------------------
-// LOGIN (login.html)
-// ------------------------
+// ----------------------------------------------------
+//                  LOGIN FUNCTION
+// ----------------------------------------------------
 window.login = async function () {
   const email = document.getElementById("loginEmail").value.trim();
   const password = document.getElementById("loginPassword").value.trim();
@@ -83,16 +84,16 @@ window.login = async function () {
   try {
     await signInWithEmailAndPassword(auth, email, password);
     alert("Login Successful!");
-    window.location.href = "Afterlogin.html";
+    window.location.href = "index.html";   
   } catch (error) {
-    alert("Login Failed: " + error.message);
+    alert("Login Failed: " + error.code + " - " + error.message);
   }
 };
 
 
-// ------------------------
-// GOOGLE LOGIN (Both pages)
-// ------------------------
+// ----------------------------------------------------
+//                 GOOGLE LOGIN (Both pages)
+// ----------------------------------------------------
 window.googleLogin = async function () {
   try {
     const result = await signInWithPopup(auth, provider);
@@ -110,7 +111,7 @@ window.googleLogin = async function () {
     );
 
     alert("Welcome " + user.displayName + "!");
-    window.location.href = "Afterlogin.html";
+    window.location.href = "index.html"; // Redirect after success
 
   } catch (error) {
     alert("Google Sign-in Failed: " + error.message);
