@@ -12,11 +12,11 @@
       <h1>Welcome Back</h1>
       <p class="subtitle">Login to continue your fitness journey</p>
 
-      <form id="loginForm">
-        <input type="email" id="loginEmail" placeholder="Email Address" required>
-        <input type="password" id="loginPassword" placeholder="Password" required>
-        <button type="submit" class="primary-btn">Login</button>
-      </form>
+      <form onsubmit="window.login(event)">
+    <input type="email" id="loginEmail" placeholder="Email" required>
+    <input type="password" id="loginPassword" placeholder="Password" required>
+    <button type="submit">Log In</button>
+</form>
 
       <div class="divider"><span>OR</span></div>
 
@@ -43,5 +43,41 @@
     const googleBtn = document.getElementById('googleLoginBtn');
     googleBtn.addEventListener('click', googleLogin);
   </script>
+  <script type="module">
+    export async function googleLogin() {
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+
+    alert("Welcome " + user.displayName + "!");
+
+    
+    window.location.href = "homepage.html";
+
+  } catch (error) {
+    alert("Google Login Failed: " + error.message);
+  }
+}
+
+  import { login, googleLogin } from './firebase.js';
+
+
+  document.getElementById('loginForm').addEventListener('submit', login);
+  document.getElementById('googleLoginBtn').addEventListener('click', googleLogin);
+</script>
+<script type="module">
+    import { logout } from "./firebase.js"; // Importing the function
+
+    async function handleLogout() {
+      try {
+        await logout(); // Calling the imported function
+        window.location.href = "login.html"; // The original redirect target
+      } catch (err) {
+        alert("Logout failed: " + err.message);
+      }
+    }
+
+    window.handleLogout = handleLogout; // Making it global for the button
+</script>
 </body>
 </html>

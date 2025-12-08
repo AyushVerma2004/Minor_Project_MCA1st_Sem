@@ -58,25 +58,42 @@ input:focus {
   box-shadow: inset 0 0 10px #00e6c3;
 }
 
-.primary-btn {
+/* Styling for the submit button within the login form */
+/* Correct styling for login button */
+.login-form button[type="submit"] {
   width: 100%;
-  padding: 12px;
-  margin-top: 15px;
-  border-radius: 10px;
+  padding: 14px 22px;
+  margin-top: 20px;
+
+  background: linear-gradient(135deg, #00e6c3, #4cc9ff);
+  color: #0f1217;
+
   border: none;
-  font-size: 1rem;
+  border-radius: 12px;
+  font-size: 1.1rem;
   font-weight: 600;
+  letter-spacing: 0.5px;
+
   cursor: pointer;
-  background: #0095ff;
-  color: #fff;
-  box-shadow: 0 0 12px rgba(0,149,255,0.3);
-  transition: 0.25s;
+  transition: 0.3s ease;
+  box-shadow: 0 0 18px rgba(0, 230, 195, 0.25);
 }
 
-.primary-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 18px rgba(0,149,255,0.5);
+/* Hover effect */
+.login-form button[type="submit"]:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 25px rgba(0, 230, 195, 0.45);
 }
+
+/* Disabled state */
+.login-form button[type="submit"]:disabled {
+  background: #1f2937;
+  color: #6b7280;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
 
 .divider {
   display: flex;
