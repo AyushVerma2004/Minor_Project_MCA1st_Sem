@@ -172,10 +172,6 @@
         <a href="Progress.html"><button class="btn" style="margin-top:15px;width:100%;">Explore</button></a>
       </div>
 
-      <div class="feature-card">
-        <h3>🤖 Smart AI Chat Coach</h3>
-        <p>Your personal assistant for tips, motivation & fitness knowledge.</p>
-      </div>
 
       <div class="feature-card">
         <h3>📈 Specific Training</h3>
@@ -185,7 +181,7 @@
 
       <div class="feature-card">
         <h3>📝 Create Your Own Plan</h3>
-        <p>Monitor your achievements with graphical progress insights.</p>
+        <p>Create Weekly Plan that Suits you.</p>
         <a href="Progress.html"><button class="btn" style="margin-top:15px;width:100%;">Explore</button></a>
       </div>
 
@@ -196,10 +192,25 @@
       </div>
     </section>
 
+
     <footer>
       © 2025 Your Fitness Buddy | <a href="#">Privacy Policy</a>
     </footer>
 
   </div>
+  <script>
+  // Check login status
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+  // Select all feature-card buttons
+  document.querySelectorAll(".feature-card a").forEach(card => {
+    card.addEventListener("click", function (e) {
+      if (!isLoggedIn) {
+        e.preventDefault(); 
+        window.location.href = "login.html"; 
+      }
+    });
+  });
+</script>
 </body>
 </html>

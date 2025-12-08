@@ -4,63 +4,186 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Your Workout Plan</title>
+
   <link rel="stylesheet" href="plan.css" />
+
+  <!-- jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
   <style>
-    /* small page-level tweaks so things look ok before JS runs */
-    header { text-align:center; margin:20px 0; }
-    .btn-area { text-align:center; margin:18px 0 40px; }
+    :root {
+      --bg: #0f1217;
+      --card: #1a1f27;
+      --accent: #00e6c3;
+      --primary: #0095ff;
+      --text: #f1f5f9;
+      --muted: #9ca3af;
+      --radius: 14px;
+      --max-width: 900px;
+      font-family: "Poppins", "Inter", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #0a0d12, #161b22);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      padding: 28px 16px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--max-width);
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 2rem;
+      color: #4cc9ff;
+      font-weight: 700;
+      text-shadow: 0 0 12px rgba(76, 201, 255, 0.4);
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    #workoutGrid {
+      display: grid;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .workout-card {
+      background: var(--card);
+      padding: 22px;
+      border-radius: var(--radius);
+      box-shadow: 0 0 18px rgba(0, 255, 200, 0.05),
+                  0 0 6px rgba(0, 255, 200, 0.08);
+      transition: 0.3s ease;
+    }
+
+    .workout-card:hover {
+      box-shadow: 0 0 25px rgba(0,255,200,0.1),
+                  0 0 10px rgba(0,255,200,0.15);
+      transform: translateY(-3px);
+    }
+
+    .workout-card h3 {
+      margin: 0 0 10px;
+      color: var(--accent);
+      font-size: 1.3rem;
+      text-shadow: 0 0 8px rgba(0, 230, 195, 0.3);
+    }
+
+    .workout-card p {
+      margin: 0;
+      line-height: 1.55;
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+
+    .btn-area {
+      text-align: center;
+      margin-top: 30px;
+    }
+
     .download-btn {
-      background:#4f8cff; color:#fff; border:none; padding:10px 16px; border-radius:8px;
-      cursor:pointer; font-weight:600;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 12px 18px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: 0.25s ease;
+      box-shadow: 0 0 12px rgba(0,149,255,0.25);
+    }
+
+    .download-btn:hover {
+      box-shadow: 0 0 18px rgba(0,149,255,0.45);
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 600px) {
+      .workout-card { padding: 18px; }
+      h1 { font-size: 1.6rem; }
     }
   </style>
 </head>
+
 <body>
+  <div class="container">
 
-  <header>
-    <h1>Your Weekly Workout Plan</h1>
-    <p>Based on your survey — generated automatically</p>
-  </header>
+    <header>
+      <h1>Your Weekly Workout Plan</h1>
+      <p class="subtitle">Generated from your fitness survey</p>
+    </header>
 
-  <main>
-    <!-- IMPORTANT: plan.js expects an element with id="workoutGrid" -->
-    <div id="workoutGrid"></div>
-
-    <div class="btn-area">
-      <button id="downloadBtn" class="download-btn">Download as Word File</button>
-      <button id="printBtn" class="download-btn" style="background:#2ecc71;margin-left:8px;">Print</button>
+    <!-- PLAN CONTENT WRAPPER FOR PDF -->
+    <div id="planContainer">
+      <div id="workoutGrid"></div>
     </div>
-  </main>
 
+    <!-- Download Button -->
+    <div class="btn-area">
+      <button id="downloadBtn" class="download-btn">Download Your Plan (PDF)</button>
+    </div>
+
+  </div>
 
   <script src="Plan.js"></script>
 
-
   <script>
-    // Wait until DOMContent loaded and plan.js has populated #workoutGrid
-    document.addEventListener('DOMContentLoaded', () => {
-      const downloadBtn = document.getElementById('downloadBtn');
-      const printBtn = document.getElementById('printBtn');
-      const grid = document.getElementById('workoutGrid');
+    document.addEventListener("DOMContentLoaded", () => {
+      const downloadBtn = document.getElementById("downloadBtn");
+      const container = document.getElementById("workoutGrid");
 
-      downloadBtn.addEventListener('click', () => {
-        // get printable HTML
-        const headerHtml = '<h1>' + document.querySelector('header h1').innerText + '</h1>';
-        const content = headerHtml + grid.outerHTML;
-        const blob = new Blob(['\ufeff' + content], { type: 'application/msword' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'workout-plan.doc';
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        URL.revokeObjectURL(url);
-      });
+      downloadBtn.addEventListener("click", () => {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({ orientation: "portrait", unit: "pt", format: "a4" });
 
-      // Print
-      printBtn.addEventListener('click', () => {
-        window.print();
+        // Title
+        doc.setFontSize(20);
+        doc.setTextColor(0, 149, 255);
+        doc.text("Your Weekly Workout Plan", 40, 50);
+
+        // Prepare content
+        const cards = container.querySelectorAll(".workout-card");
+        let y = 80;
+
+        cards.forEach(card => {
+          const title = card.querySelector("h3").innerText;
+          const exercises = card.querySelector("p").innerText;
+
+          doc.setFontSize(14);
+          doc.setTextColor(0, 230, 195);
+          doc.text(title, 40, y);
+          y += 20;
+
+          doc.setFontSize(12);
+          doc.setTextColor(255, 255, 255);
+          const lines = doc.splitTextToSize(exercises, 500);
+          doc.text(lines, 40, y);
+          y += lines.length * 15 + 20;
+
+          if (y > 750) {
+            doc.addPage();
+            y = 50;
+          }
+        });
+
+        doc.save("Workout-Plan.pdf");
       });
     });
   </script>

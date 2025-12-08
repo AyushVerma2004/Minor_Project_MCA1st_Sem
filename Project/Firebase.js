@@ -84,7 +84,7 @@ window.login = async function () {
   try {
     await signInWithEmailAndPassword(auth, email, password);
     alert("Login Successful!");
-    window.location.href = "index.html";   
+    window.location.href = "homepage.html";   
   } catch (error) {
     alert("Login Failed: " + error.code + " - " + error.message);
   }
@@ -111,7 +111,7 @@ window.googleLogin = async function () {
     );
 
     alert("Welcome " + user.displayName + "!");
-    window.location.href = "index.html"; // Redirect after success
+    window.location.href = "homepage.html"; // Redirect after success
 
   } catch (error) {
     alert("Google Sign-in Failed: " + error.message);
