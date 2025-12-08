@@ -5,8 +5,150 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign Up - Fitness Buddy</title>
   <link rel="stylesheet" href="Sign.css">
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #0a0d12, #161b22);
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: white;
+    }
+
+    .auth-container {
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .card {
+      background: #1a1f27;
+      padding: 30px 25px;
+      border-radius: 14px;
+      box-shadow: 0 0 20px rgba(0,255,200,0.15);
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+      color: #4cc9ff;
+      text-shadow: 0 0 10px rgba(76, 201, 255, 0.4);
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: #9ca3af;
+      margin-bottom: 25px;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    input {
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      background: rgba(255,255,255,0.1);
+      color: white;
+      font-size: 0.95rem;
+      transition: 0.2s;
+    }
+
+    input:focus {
+      background: rgba(0,230,195,0.15);
+      box-shadow: 0 0 8px rgba(0,230,195,0.3);
+    }
+
+    .primary-btn {
+      background: #0095ff;
+      color: white;
+      font-weight: 600;
+      padding: 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.2s;
+      border: none;
+      margin-top: 10px;
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 12px rgba(0,149,255,0.45);
+    }
+
+    .divider {
+      margin: 20px 0;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      color: #9ca3af;
+    }
+
+    .divider span {
+      margin: 0 10px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(156,163,175,0.3);
+    }
+
+    .google-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background: #00e676;
+  color: #000;
+  transition: 0.25s;
+}
+
+.google-btn img {
+  width: 20px;
+  margin-right: 10px;
+}
+
+.google-btn:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 12px #00e676;
+}
+
+    .footer-text a {
+      color: #4cc9ff;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .footer-text a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 450px) {
+      .card {
+        padding: 20px;
+      }
+
+      h1 { font-size: 1.5rem; }
+    }
+  </style>
 </head>
-<body> 
+<body>
   <div class="auth-container">
     <div class="card">
       <h1>Welcome to <span>Your Fitness Buddy</span></h1>
@@ -36,7 +178,6 @@
     </div>
   </div>
 
-  <!-- Make sure this matches your actual filename exactly -->
   <script type="module" src="firebase.js"></script>
 </body>
 </html>

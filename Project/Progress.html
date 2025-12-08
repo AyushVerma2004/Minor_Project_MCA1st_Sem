@@ -1,249 +1,316 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fitness Progress Tracker</title>
-  <style>
-    body {
-      font-family: Poppins, sans-serif;
-      background: linear-gradient(135deg, #0f0f0f, #1b1b1b, #242424);
-      color: white;
-      margin: 0;
-      padding: 20px;
-    }
-    h1 {
-      text-align: center;
-      font-weight: 700;
-      letter-spacing: 1px;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fitness Progress Tracker</title>
 
-    .container {
-      max-width: 750px;
-      margin: auto;
-      background: rgba(255,255,255,0.08);
-      padding: 25px;
-      border-radius: 14px;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 0 20px rgba(0,0,0,0.4);
-      margin-bottom: 35px;
-    }
-    input, button {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border-radius: 8px;
-      border: none;
-      outline: none;
-      font-size: 15px;
-    }
-    input {
-      background: rgba(255,255,255,0.15);
-      color: white;
-    }
-    button {
-      background: linear-gradient(135deg, #00e676, #00c853);
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-    button:hover {
-      transform: scale(1.03);
-      box-shadow: 0 0 10px #00e676;
-    }
+<style>
+:root {
+  --bg: #0f1217;
+  --card: #1a1f27;
+  --accent: #00e6c3;
+  --primary: #0095ff;
+  --text: #f1f5f9;
+  --muted: #9ca3af;
+  --radius: 14px;
+}
 
-    table {
-      width: 100%;
-      margin-top: 20px;
-      border-collapse: collapse;
-      color: white;
-    }
-    th, td {
-      padding: 12px;
-      border-bottom: 1px solid rgba(255,255,255,0.25);
-      text-align: center;
-    }
+body {
+  font-family: Poppins, sans-serif;
+  background: linear-gradient(135deg, #0a0d12, #161b22);
+  color: var(--text);
+  margin: 0;
+  padding: 20px;
+}
 
-    /* Calendar Styles */
-    .calendar-container {
-      max-width: 600px;
-      margin: 30px auto;
-      background: rgba(255,255,255,0.08);
-      padding: 20px;
-      border-radius: 14px;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 0 20px rgba(0,0,0,0.4);
-    }
+h1 {
+  text-align: center;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--primary);
+  text-shadow: 0 0 12px rgba(0,149,255,0.4);
+}
 
-    .calendar-header {
-      text-align: center;
-      font-size: 22px;
-      font-weight: 600;
-      margin-bottom: 15px;
-      letter-spacing: 1px;
-    }
+.container {
+  max-width: 800px;
+  margin: auto;
+  background: var(--card);
+  padding: 25px;
+  border-radius: var(--radius);
+  box-shadow: 0 0 20px rgba(0,255,200,0.2);
+  margin-bottom: 35px;
+}
 
-    .calendar {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 10px;
-    }
+input, button {
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  font-size: 15px;
+}
 
-    .day-name {
-      font-weight: bold;
-      text-align: center;
-      padding: 10px 0;
-      opacity: 0.7;
-    }
+input {
+  width: 100%;
+  background: rgba(255,255,255,0.05);
+  color: var(--text);
+}
 
-    .day {
-      text-align: center;
-      padding: 15px 0;
-      border-radius: 10px;
-      background: rgba(255,255,255,0.12);
-      position: relative;
-      font-size: 15px;
-      transition: 0.25s;
-    }
+button {
+  width: 100%;
+  background: linear-gradient(135deg, var(--accent), #00bfa5);
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
 
-    .day:hover {
-      background: rgba(0, 230, 118, 0.25);
-      transform: scale(1.05);
-    }
+button:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 15px var(--accent);
+}
 
-    .marked {
-      box-shadow: 0 0 12px #00e676;
-      background: rgba(0, 230, 118, 0.3) !important;
-    }
+table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+  color: var(--text);
+}
 
-  </style>
+th, td {
+  padding: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  text-align: center;
+}
+
+td button {
+  width: auto;
+  background: #ff1744;
+  padding: 6px 10px;
+  font-size: 12px;
+}
+
+td button:hover {
+  box-shadow: 0 0 10px #ff1744;
+}
+
+.overview {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+  padding: 15px;
+  background: rgba(0,230,195,0.05);
+  border-radius: var(--radius);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.calendar-container {
+  max-width: 750px;
+  margin: 30px auto;
+  background: var(--card);
+  padding: 20px;
+  border-radius: var(--radius);
+  box-shadow: 0 0 20px rgba(0,255,200,0.2);
+}
+
+.calendar-header {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  letter-spacing: 1px;
+  color: var(--primary);
+}
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+}
+
+.day-name {
+  font-weight: bold;
+  text-align: center;
+  padding: 10px 0;
+  opacity: 0.7;
+  color: var(--muted);
+}
+
+.day {
+  text-align: center;
+  padding: 15px 0;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.05);
+  position: relative;
+  font-size: 15px;
+  transition: 0.25s;
+  cursor: pointer;
+}
+
+.day:hover {
+  background: rgba(0, 230, 118, 0.25);
+  transform: scale(1.05);
+}
+
+.day.marked {
+  box-shadow: 0 0 12px var(--accent);
+  background: rgba(0,230,195,0.2);
+}
+</style>
 </head>
 <body>
 
-  <h1>🏋️ Fitness Progress Tracker</h1>
+<h1>🏋️ Fitness Progress Tracker</h1>
 
-  <div class="container">
-    <h3>Add Workout</h3>
-    <input type="text" id="exercise" placeholder="Exercise Name">
-    <input type="number" id="sets" placeholder="Sets">
-    <input type="number" id="reps" placeholder="Reps">
-    <input type="number" id="weight" placeholder="Weight (kg)">
-    <input type="date" id="date">
+<div class="container">
+  <h3>Add Workout</h3>
+  <input type="text" id="exercise" placeholder="Exercise Name">
+  <input type="number" id="sets" placeholder="Sets">
+  <input type="number" id="reps" placeholder="Reps">
+  <input type="number" id="weight" placeholder="Weight (kg)">
+  <input type="date" id="date">
+  <button onclick="addWorkout()">Add Entry</button>
 
-    <button onclick="addWorkout()">Add Entry</button>
-
-    <h3>Your Progress</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Exercise</th>
-          <th>Sets</th>
-          <th>Reps</th>
-          <th>Weight</th>
-          <th>Date</th>
-        </tr>
-      </thead>
-      <tbody id="progressBody"></tbody>
-    </table>
+  <div class="overview">
+    <div>Total Workouts: <span id="totalWorkouts">0</span></div>
+    <div>Total Sets: <span id="totalSets">0</span></div>
+    <div>Total Weight: <span id="totalWeight">0</span>kg</div>
   </div>
 
-  <div class="calendar-container">
-    <div class="calendar-header" id="monthHeader"></div>
-    <div class="calendar" id="calendar"></div>
-  </div>
+  <h3>Your Progress</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Exercise</th>
+        <th>Sets</th>
+        <th>Reps</th>
+        <th>Weight</th>
+        <th>Date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="progressBody"></tbody>
+  </table>
+</div>
+
+<div class="calendar-container">
+  <div class="calendar-header" id="monthHeader"></div>
+  <div class="calendar" id="calendar"></div>
+</div>
 
 <script>
-  let workouts = JSON.parse(localStorage.getItem("workouts")) || [];
+let workouts = JSON.parse(localStorage.getItem("workouts")) || [];
 
-  displayWorkouts();
+function updateOverview() {
+  const totalWorkouts = workouts.length;
+  const totalSets = workouts.reduce((sum,w) => sum + Number(w.sets),0);
+  const totalWeight = workouts.reduce((sum,w) => sum + Number(w.weight*w.sets),0);
+
+  document.getElementById("totalWorkouts").innerText = totalWorkouts;
+  document.getElementById("totalSets").innerText = totalSets;
+  document.getElementById("totalWeight").innerText = totalWeight;
+}
+
+function addWorkout() {
+  const exercise = document.getElementById("exercise").value.trim();
+  const sets = document.getElementById("sets").value;
+  const reps = document.getElementById("reps").value;
+  const weight = document.getElementById("weight").value;
+  const date = document.getElementById("date").value;
+
+  if(!exercise || !sets || !reps || !weight || !date) { alert("Please fill all fields"); return; }
+
+  workouts.push({exercise, sets, reps, weight, date});
+  localStorage.setItem("workouts", JSON.stringify(workouts));
+  renderWorkouts();
   generateCalendar();
+  updateOverview();
 
-  function addWorkout() {
-    const exercise = document.getElementById("exercise").value;
-    const sets = document.getElementById("sets").value;
-    const reps = document.getElementById("reps").value;
-    const weight = document.getElementById("weight").value;
-    const date = document.getElementById("date").value;
+  document.getElementById("exercise").value = "";
+  document.getElementById("sets").value = "";
+  document.getElementById("reps").value = "";
+  document.getElementById("weight").value = "";
+  document.getElementById("date").value = "";
+}
 
-    if (!exercise || !sets || !reps || !weight || !date) {
-      alert("Please fill all fields");
-      return;
-    }
+function deleteWorkout(index) {
+  workouts.splice(index,1);
+  localStorage.setItem("workouts", JSON.stringify(workouts));
+  renderWorkouts();
+  generateCalendar();
+  updateOverview();
+}
 
-    const entry = { exercise, sets, reps, weight, date };
-    workouts.push(entry);
-    localStorage.setItem("workouts", JSON.stringify(workouts));
+function renderWorkouts() {
+  const tbody = document.getElementById("progressBody");
+  tbody.innerHTML = "";
+  workouts.forEach((w,index) => {
+    tbody.innerHTML += `<tr>
+      <td>${w.exercise}</td>
+      <td>${w.sets}</td>
+      <td>${w.reps}</td>
+      <td>${w.weight}</td>
+      <td>${w.date}</td>
+      <td><button onclick="deleteWorkout(${index})">Delete</button></td>
+    </tr>`;
+  });
+}
 
-    displayWorkouts();
-    generateCalendar();
+function generateCalendar() {
+  const calendar = document.getElementById("calendar");
+  const monthHeader = document.getElementById("monthHeader");
+  calendar.innerHTML = "";
 
-    document.getElementById("exercise").value = "";
-    document.getElementById("sets").value = "";
-    document.getElementById("reps").value = "";
-    document.getElementById("weight").value = "";
-    document.getElementById("date").value = "";
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth();
+  const monthName = today.toLocaleString('default',{month:'long'});
+  monthHeader.innerText = `${monthName} ${year}`;
+
+  const firstDay = new Date(year, month,1).getDay();
+  const daysInMonth = new Date(year, month+1,0).getDate();
+
+  const days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  days.forEach(d => {
+    const div = document.createElement("div");
+    div.className = "day-name";
+    div.innerText = d;
+    calendar.appendChild(div);
+  });
+
+  for(let i=0;i<firstDay;i++){
+    calendar.appendChild(document.createElement("div"));
   }
 
-  function displayWorkouts() {
-    const tbody = document.getElementById("progressBody");
-    tbody.innerHTML = "";
+  for(let day=1;day<=daysInMonth;day++){
+    const div = document.createElement("div");
+    div.className = "day";
+    div.innerText = day;
+    const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+    if(workouts.some(w=>w.date===dateStr)) div.classList.add("marked");
 
-    workouts.forEach(w => {
-      const row = `<tr>
-        <td>${w.exercise}</td>
-        <td>${w.sets}</td>
-        <td>${w.reps}</td>
-        <td>${w.weight}</td>
-        <td>${w.date}</td>
-      </tr>`;
-      tbody.innerHTML += row;
+    div.addEventListener("click",()=>showWorkoutsByDate(dateStr));
+    calendar.appendChild(div);
+  }
+}
+
+function showWorkoutsByDate(date){
+  const filtered = workouts.filter(w=>w.date===date);
+  if(filtered.length===0){
+    alert(`No workouts on ${date}`);
+  } else {
+    let msg = `Workouts on ${date}:\n`;
+    filtered.forEach(w=>{
+      msg += `${w.exercise} - ${w.sets}x${w.reps} @ ${w.weight}kg\n`;
     });
+    alert(msg);
   }
+}
 
-  function generateCalendar() {
-    const calendar = document.getElementById("calendar");
-    const monthHeader = document.getElementById("monthHeader");
-
-    calendar.innerHTML = "";
-
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth();
-
-    const monthName = today.toLocaleString('default', { month: 'long' });
-    monthHeader.textContent = `${monthName} ${year}`;
-
-    const firstDay = new Date(year, month, 1).getDay();
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-    days.forEach(d => {
-      const div = document.createElement("div");
-      div.className = "day-name";
-      div.textContent = d;
-      calendar.appendChild(div);
-    });
-
-    for (let i = 0; i < firstDay; i++) {
-      const blank = document.createElement("div");
-      calendar.appendChild(blank);
-    }
-
-    for (let day = 1; day <= daysInMonth; day++) {
-      const div = document.createElement("div");
-      div.classList.add("day");
-      div.textContent = day;
-
-      const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-
-      if (workouts.some(w => w.date === dateString)) {
-        div.classList.add("marked");
-      }
-
-      calendar.appendChild(div);
-    }
-  }
+renderWorkouts();
+generateCalendar();
+updateOverview();
 </script>
 
 </body>

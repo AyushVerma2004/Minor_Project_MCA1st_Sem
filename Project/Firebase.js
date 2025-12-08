@@ -1,6 +1,6 @@
-// firebase.js (type="module")
-
-// ---------------- FIREBASE IMPORTS ----------------
+// ----------------------------------------------------
+// FIREBASE IMPORTS
+// ----------------------------------------------------
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 import {
   getAuth,
@@ -21,7 +21,9 @@ import {
   query
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
-// ---------------- FIREBASE CONFIG ----------------
+// ----------------------------------------------------
+// FIREBASE CONFIG
+// ----------------------------------------------------
 const firebaseConfig = {
   apiKey: "AIzaSyAWCLISIOyr4nHjJ2URuqD84EWAyHXBgDM",
   authDomain: "your-fitness-buddy-login.firebaseapp.com",
@@ -32,24 +34,21 @@ const firebaseConfig = {
   measurementId: "G-S5CNQJ1F77"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+
+// Google Provider
 const provider = new GoogleAuthProvider();
 provider.setCustomParameters({ prompt: 'select_account' });
 
 // ----------------------------------------------------
-// SIGN UP
+// SIGNUP
 // ----------------------------------------------------
 export async function signup(name, email, mobile, password) {
   try {
     if (!name || !email || !mobile || !password)
       throw new Error("All fields are required");
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
-      throw new Error("Invalid email format");
-    if (password.length < 6)
-      throw new Error("Password must be at least 6 characters");
 
     const userCred = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCred.user;
@@ -58,184 +57,141 @@ export async function signup(name, email, mobile, password) {
       name,
       email,
       mobile,
-      createdAt: new Date(),
-      authType: "email"
+      authType: "email",
+      createdAt: new Date()
     });
 
-    alert("Account Created Successfully!");
+    alert("Signup Successful!");
     window.location.href = "login.html";
 
   } catch (error) {
     console.error("Signup Error:", error);
 
-    if (error.code === "auth/email-already-in-use") {
-      alert("This email is already registered. Please login instead.");
-    } else if (error.code === "auth/weak-password") {
-      alert("Password is too weak. Please use at least 6 characters.");
-    } else if (error.code === "auth/invalid-email") {
+    if (error.code === "auth/email-already-in-use")
+      alert("This email is already registered!");
+    else if (error.code === "auth/invalid-email")
       alert("Invalid email format.");
+    else if (error.code === "auth/weak-password")
+      alert("Password must be 6+ characters.");
+    else
+      alert(error.message);
+  }
+}
+
+// ----------------------------------------------------
+// LOGIN
+// ----------------------------------------------------
+
+// Change: Exported function is now a global function
+window.login = async function (event) {
+  event?.preventDefault();
+
+  const email = document.getElementById("loginEmail")?.value.trim();
+  const password = document.getElementById("loginPassword")?.value.trim();
+
+  if (!email || !password) return alert("Please fill all fields.");
+
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    alert("Login Successful!");
+    window.location.href = "homepage.html";
+  } catch (error) {
+    console.error("Login Error:", error);
+    // Added a better user-facing error message for common issues
+    if (error.code === "auth/invalid-credential") {
+        alert("Login Failed: Invalid email or password.");
     } else {
-      alert("Signup Failed: " + error.message);
+        alert("Login Failed: " + error.message);
     }
   }
 }
 
 // ----------------------------------------------------
-// LOGIN FUNCTION
-// ----------------------------------------------------
-window.login = async function (event) {
-  if (event) event.preventDefault();
-
-  const email = document.getElementById("loginEmail")?.value.trim();
-  const password = document.getElementById("loginPassword")?.value.trim();
-
-  if (!email || !password) {
-    alert("Please enter email and password!");
-    return;
-  }
-
-  let loginButton = event?.target;
-  if (loginButton && loginButton.tagName !== 'BUTTON') {
-    loginButton = document.querySelector('.primary-btn');
-  }
-
-  if (loginButton) {
-    loginButton.disabled = true;
-    loginButton.dataset.originalText = loginButton.textContent;
-    loginButton.textContent = "Logging in...";
-  }
-
-  try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    alert("Login Successful!");
-    window.location.href = "homepage.html";
-
-  } catch (error) {
-    console.error("Login Error:", error);
-
-    if (loginButton) {
-      loginButton.disabled = false;
-      loginButton.textContent = loginButton.dataset.originalText;
-    }
-
-    if (error.code === "auth/invalid-credential") {
-      alert("Invalid email or password.");
-    } else if (error.code === "auth/user-not-found") {
-      alert("No account found with this email.");
-    } else if (error.code === "auth/wrong-password") {
-      alert("Incorrect password.");
-    } else if (error.code === "auth/too-many-requests") {
-      alert("Too many attempts. Try later.");
-    } else {
-      alert("Login Failed: " + error.message);
-    }
-  }
-};
-
-// ----------------------------------------------------
 // GOOGLE LOGIN
 // ----------------------------------------------------
 window.googleLogin = async function () {
-  const googleBtn = document.querySelector('.google-btn');
-
-  if (googleBtn) {
-    googleBtn.disabled = true;
-    googleBtn.style.opacity = '0.6';
-  }
-
-  try {
-    const result = await signInWithPopup(auth, provider);
-    const user = result.user;
-
-    await setDoc(
-      doc(db, "users", user.uid),
-      {
-        name: user.displayName,
-        email: user.email,
-        photoURL: user.photoURL || null,
-        googleAuth: true,
-        lastLogin: new Date()
-      },
-      { merge: true }
-    );
-
-    alert("Welcome " + user.displayName + "!");
-    window.location.href = "homepage.html";
-
-  } catch (error) {
-    console.error("Google Login Error:", error);
-
-    if (googleBtn) {
-      googleBtn.disabled = false;
-      googleBtn.style.opacity = '1';
+    const btn = document.querySelector(".google-btn");
+    
+    
+    if (btn) {
+        btn.disabled = true;
+        btn.style.opacity = "0.6";
     }
 
-    alert("Google Login Failed: " + error.message);
-  }
+    try {
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user; // Get the authenticated user object
+        
+        
+        await setDoc(doc(db, "users", user.uid), {
+            name: user.displayName,
+            email: user.email,
+            photoURL: user.photoURL,
+            googleAuth: true,
+            lastLogin: new Date()
+        }, { merge: true });
+
+       
+        alert(`Welcome ${user.displayName}!`);
+        
+        
+        window.location.href = "homepage.html"; 
+        
+
+    } catch (error) {
+        console.error("Google Login Error:", error);
+        alert("Google login failed: " + error.message);
+
+        // 6. Re-enable button on failure
+        if (btn) {
+            btn.disabled = false;
+            btn.style.opacity = "1";
+        }
+    }
 };
 
 // ----------------------------------------------------
 // LOGOUT
 // ----------------------------------------------------
 window.logout = async function () {
-  try {
-    await signOut(auth);
-    alert("Logged out successfully!");
-    window.location.href = "index.html";
-  } catch (error) {
-    alert("Logout Error: " + error.message);
-  }
+  await signOut(auth);
+  alert("Logged out!");
+  window.location.href = "index.html"; // Redirects to index.html
 };
 
-// ----------------------------------------------------
-// CHECK AUTH STATUS
-// ----------------------------------------------------
-window.checkAuthStatus = function () {
-  return new Promise((resolve) => {
-    onAuthStateChanged(auth, resolve);
-  });
-};
-
-// ----------------------------------------------------
-// CURRENT USER
-// ----------------------------------------------------
-export function getCurrentUser() {
-  return auth.currentUser;
-}
-
-// ----------------------------------------------------
-// FIRESTORE FUNCTIONS
-// ----------------------------------------------------
-export async function saveWorkout(userId, workout) {
-  if (!userId) throw new Error("User ID required");
-  const docRef = await addDoc(collection(db, "users", userId, "workouts"), workout);
-  return docRef.id;
-}
-
-export async function saveGoal(userId, goal) {
-  if (!userId) throw new Error("User ID required");
-  const docRef = await addDoc(collection(db, "users", userId, "goals"), goal);
-  return docRef.id;
-}
-
-export async function getWorkouts(userId) {
-  if (!userId) throw new Error("User ID required");
-  const q = query(collection(db, "users", userId, "workouts"));
-  const snapshot = await getDocs(q);
-  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-}
-
-export async function getGoals(userId) {
-  if (!userId) throw new Error("User ID required");
-  const q = query(collection(db, "users", userId, "goals"));
-  const snapshot = await getDocs(q);
-  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+// ...
+export async function logout() { // This export is missing in firebase.js
+  await signOut(auth);
+  // No alert or redirect here, handled by window.logout or the module code
 }
 
 // ----------------------------------------------------
 // AUTH OBSERVER
 // ----------------------------------------------------
 onAuthStateChanged(auth, user => {
-  if (user) console.log("User signed in:", user.email);
-  else console.log("No user signed in");
+  if (user) console.log("Logged in:", user.email);
+  else console.log("Logged out");
 });
+
+// ----------------------------------------------------
+// FIRESTORE FUNCTIONS
+// ----------------------------------------------------
+export async function saveWorkout(uid, workout) {
+  const ref = await addDoc(collection(db, "users", uid, "workouts"), workout);
+  return ref.id;
+}
+
+export async function saveGoal(uid, goal) {
+  const ref = await addDoc(collection(db, "users", uid, "goals"), goal);
+  return ref.id;
+}
+
+export async function getWorkouts(uid) {
+  const qSnap = await getDocs(query(collection(db, "users", uid, "workouts")));
+  return qSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+export async function getGoals(uid) {
+  const qSnap = await getDocs(query(collection(db, "users", uid, "goals")));
+  return qSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+}

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Custom Workout Planner</title>
+
+  <style>
+    :root{
+      --bg:#0f1724;
+      --card:#0b1220;
+      --muted:#94a3b8;
+      --accent:#ff6b6b;
+      --accent-2:#60a5fa;
+      --glass:rgba(255,255,255,0.05);
+      --radius:14px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(180deg, var(--bg), #071020);
+      color: #e6eef8;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      color: transparent;
+      font-weight: 700;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: var(--glass);
+      padding: 25px;
+      border-radius: 18px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+      backdrop-filter: blur(12px);
+      animation: fade .5s ease;
+    }
+
+    @keyframes fade {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    h3 {
+      margin-top: 20px;
+      font-size: 18px;
+      color: var(--accent-2);
+    }
+
+    /* Modern Dropdown */
+    select, input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.06);
+      color: #fff;
+      font-size: 15px;
+      outline: none;
+      transition: .3s;
+    }
+
+    select:focus, input:focus {
+      border-color: var(--accent-2);
+      box-shadow: 0 0 8px var(--accent-2);
+    }
+
+    /* Button */
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 12px;
+      border-radius: var(--radius);
+      border: none;
+      background: linear-gradient(90deg,var(--accent),var(--accent-2));
+      color:#071020;
+      cursor:pointer;
+      font-weight:600;
+      transition:.25s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    /* Plan Box */
+    .plan {
+      margin-top: 25px;
+      padding: 15px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .day-block {
+      padding: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .day-block:last-child {
+      border-bottom: none;
+    }
+
+    #downloadBtn {
+      margin-top: 20px;
+      background: linear-gradient(90deg,#60ffa8,#1effd9);
+      color: #042a1c;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🏋️ Custom Workout Planner</h1>
+
+  <div class="container">
+
+    <h3>📅 Select Day</h3>
+    <select id="daySelect">
+      <option value="Monday">Monday</option>
+      <option value="Tuesday">Tuesday</option>
+      <option value="Wednesday">Wednesday</option>
+      <option value="Thursday">Thursday</option>
+      <option value="Friday">Friday</option>
+      <option value="Saturday">Saturday</option>
+      <option value="Sunday">Sunday</option>
+    </select>
+
+    <h3>💪 Select Muscle Group (max 2)</h3>
+    <select id="muscleSelect" multiple>
+      <option value="Chest">Chest</option>
+      <option value="Back">Back</option>
+      <option value="Shoulders">Shoulders</option>
+      <option value="Arms">Arms</option>
+      <option value="Legs">Legs</option>
+      <option value="Abs">Abs</option>
+    </select>
+
+    <h3>🔥 Select Exercise</h3>
+    <select id="exerciseSelect" multiple></select>
+
+    <h3>🔁 Sets</h3>
+    <input type="number" id="setsInput" min="1" max="10" value="3">
+
+    <h3>✨ Reps</h3>
+    <input type="number" id="repsInput" min="1" max="50" value="10">
+
+    <button onclick="addExercise()">Add to Plan</button>
+
+    <h2 style="margin-top:20px;color:var(--accent);">📘 Your Weekly Plan</h2>
+    <div id="planContainer" class="plan"></div>
+
+    <button id="downloadBtn" onclick="downloadPDF()">Download Workout Plan (PDF)</button>
+
+  </div>
+
+  <script>
+    const exerciseData = {
+      Chest: ["Bench Press", "Incline Dumbbell Press", "Chest Fly", "Cable Crossover", "Push Ups", "Decline Press", "Machine Chest Press", "Dips"],
+      Back: ["Deadlift", "Lat Pulldown", "Bent Over Row", "Seated Cable Row", "Pull Ups", "T-Bar Row", "Hyperextensions", "Single Arm Dumbbell Row"],
+      Shoulders: ["Shoulder Press", "Lateral Raises", "Front Raises", "Rear Delt Fly", "Arnold Press", "Machine Shoulder Press", "Cable Lateral Raise", "Shrugs"],
+      Arms: ["Bicep Curls", "Hammer Curls", "Tricep Pushdown", "Skull Crushers", "Preacher Curl", "Overhead Tricep Extension", "Close Grip Bench Press", "Concentration Curl"],
+      Legs: ["Squats", "Leg Press", "Lunges", "Leg Extensions", "Leg Curls", "Calf Raises", "Bulgarian Split Squats", "Romanian Deadlift"],
+      Abs: ["Crunches", "Leg Raises", "Planks", "Cable Crunches", "Russian Twists", "Mountain Climbers", "Hanging Knee Raises", "Bicycle Crunches"]
+    };
+
+    const weeklyPlan = {};
+
+    document.getElementById('muscleSelect').addEventListener('change', loadFilteredExercises);
+
+    function loadFilteredExercises() {
+      const selectedMuscles = Array.from(document.getElementById('muscleSelect').selectedOptions).map(o => o.value);
+      const select = document.getElementById('exerciseSelect');
+      select.innerHTML = '';
+
+      selectedMuscles.forEach(muscle => {
+        exerciseData[muscle].forEach(ex => {
+          const opt = document.createElement('option');
+          opt.value = ex;
+          opt.textContent = ex;
+          select.appendChild(opt);
+        });
+      });
+    }
+
+    function addExercise() {
+      const day = document.getElementById('daySelect').value;
+      const muscles = Array.from(document.getElementById('muscleSelect').selectedOptions).map(o => o.value);
+      const exerciseList = Array.from(document.getElementById('exerciseSelect').selectedOptions).map(o => o.value);
+      const sets = document.getElementById('setsInput').value;
+      const reps = document.getElementById('repsInput').value;
+
+      if (muscles.length > 2) {
+        alert('Please select up to 2 muscles only.');
+        return;
+      }
+
+      if (!exerciseList.length) {
+        alert('Select at least one exercise.');
+        return;
+      }
+
+      if (!weeklyPlan[day]) weeklyPlan[day] = [];
+      weeklyPlan[day].push({ muscles, exerciseList, sets, reps });
+
+      renderPlan();
+    }
+
+    function renderPlan() {
+      const container = document.getElementById('planContainer');
+      container.innerHTML = '';
+
+      for (const day in weeklyPlan) {
+        const block = document.createElement('div');
+        block.className = 'day-block';
+
+        let html = `<h3 style="color:#60a5fa;">${day}</h3>`;
+        weeklyPlan[day].forEach(item => {
+          item.exerciseList.forEach(ex => {
+            html += `<p><strong>${item.muscles.join(', ')}:</strong> ${ex} — ${item.sets} sets × ${item.reps} reps</p>`;
+          });
+        });
+
+        block.innerHTML = html;
+        container.appendChild(block);
+      }
+    }
+
+    function downloadPDF() {
+      window.print();
+    }
+  </script>
+
+</body>
+</html>

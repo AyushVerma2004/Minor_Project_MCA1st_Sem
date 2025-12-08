@@ -1,11 +1,223 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Goal Tracker</title>
+
+  <link rel="stylesheet" href="goal-tracker.css">
+
+  <style>
+    :root {
+      --bg: #0f1217;
+      --card: #1a1f27;
+      --accent: #00e6c3;
+      --primary: #0095ff;
+      --text: #f1f5f9;
+      --muted: #9ca3af;
+      --radius: 14px;
+      --max-width: 700px;
+
+      font-family: "Poppins", "Inter", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #0a0d12, #161b22);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      padding: 28px 16px;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--max-width);
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      margin: 0 0 6px;
+      font-size: 2rem;
+      color: #4cc9ff;
+      font-weight: 700;
+      text-shadow: 0 0 12px rgba(76, 201, 255, 0.4);
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    /* Input and button */
+    .goal-input-area {
+      display: flex;
+      margin: 20px 0;
+      gap: 8px;
+    }
+
+    .goal-input-area input {
+      flex: 1;
+      padding: 10px 14px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #11151a;
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+
+    .goal-input-area button {
+      padding: 10px 16px;
+      border-radius: var(--radius);
+      border: none;
+      background: var(--accent);
+      color: #000;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
+
+    .goal-input-area button:hover {
+      box-shadow: 0 0 15px rgba(0,230,195,0.3);
+      transform: translateY(-2px);
+    }
+
+    /* Goals list */
+    ul#goalList {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    ul#goalList li {
+      display: flex;
+      align-items: center;
+      background: var(--card);
+      padding: 12px 16px;
+      border-radius: var(--radius);
+      margin-bottom: 12px;
+      box-shadow: 0 0 18px rgba(0,255,200,0.05);
+      transition: 0.3s ease;
+    }
+
+    ul#goalList li:hover {
+      box-shadow: 0 0 25px rgba(0,255,200,0.1);
+      transform: translateY(-2px);
+    }
+
+    ul#goalList li.completed {
+      opacity: 0.7;
+      text-decoration: line-through;
+      color: var(--muted);
+    }
+
+    ul#goalList li input[type="checkbox"] {
+      margin-right: 12px;
+      accent-color: var(--accent);
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    /* Summary */
+    .summary {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      .goal-input-area {
+        flex-direction: column;
+      }
+      .goal-input-area button {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
-    
+
+  <div class="container">
+    <header>
+      <h1>Goal Tracker</h1>
+      <p class="subtitle">Add, complete and track your goals</p>
+    </header>
+
+    <div class="goal-input-area">
+      <input type="text" id="goalInput" placeholder="Add new goal...">
+      <button id="addGoalBtn">Add Goal</button>
+    </div>
+
+    <ul id="goalList"></ul>
+
+    <div class="summary">
+      Total Goals: <span id="totalGoals">0</span> | Completed: <span id="completedGoals">0</span>
+    </div>
+  </div>
+
+  <script>
+    const goalInput = document.getElementById('goalInput');
+    const addGoalBtn = document.getElementById('addGoalBtn');
+    const goalList = document.getElementById('goalList');
+    const totalGoals = document.getElementById('totalGoals');
+    const completedGoals = document.getElementById('completedGoals');
+
+    let goals = [];
+
+    function updateSummary() {
+      totalGoals.innerText = goals.length;
+      completedGoals.innerText = goals.filter(g => g.completed).length;
+    }
+
+    function renderGoals() {
+      goalList.innerHTML = '';
+      goals.forEach((goal, index) => {
+        const li = document.createElement('li');
+        li.className = goal.completed ? 'completed' : '';
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.checked = goal.completed;
+        checkbox.addEventListener('change', () => {
+          goals[index].completed = checkbox.checked;
+          renderGoals();
+          updateSummary();
+        });
+
+        const span = document.createElement('span');
+        span.innerText = goal.text;
+
+        li.appendChild(checkbox);
+        li.appendChild(span);
+        goalList.appendChild(li);
+      });
+    }
+
+    addGoalBtn.addEventListener('click', () => {
+      const text = goalInput.value.trim();
+      if (text) {
+        goals.push({ text, completed: false });
+        goalInput.value = '';
+        renderGoals();
+        updateSummary();
+      }
+    });
+
+    // Allow Enter key to add goal
+    goalInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') addGoalBtn.click();
+    });
+  </script>
+
 </body>
 </html>
