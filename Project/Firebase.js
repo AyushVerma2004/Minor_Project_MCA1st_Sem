@@ -7,13 +7,18 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
-
 import {
   getFirestore,
   setDoc,
-  doc
+  doc,
+  collection,
+  addDoc,
+  getDocs,
+  query
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
 // ---------------- FIREBASE CONFIG ----------------
@@ -27,93 +32,103 @@ const firebaseConfig = {
   measurementId: "G-S5CNQJ1F77"
 };
 
-// ---------------- INITIALIZE FIREBASE ----------------
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
+provider.setCustomParameters({ prompt: 'select_account' });
 
+// ---------------- SIGN UP ----------------
+export async function signup(name, email, mobile, password) {
+  if (!name || !email || !mobile || !password) throw new Error("All fields are required");
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Error("Invalid email format");
+  if (password.length < 6) throw new Error("Password must be at least 6 characters");
 
-// ----------------------------------------------------
-//                 SIGN UP FUNCTION
-// ----------------------------------------------------
-window.signup = async function () {
-  const name = document.getElementById("username").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const mobile = document.getElementById("mobile").value.trim();
-  const password = document.getElementById("password").value.trim();
+  const userCred = await createUserWithEmailAndPassword(auth, email, password);
+  const user = userCred.user;
 
-  if (!name || !email || !password || !mobile) {
-    alert("Please fill all fields!");
-    return;
-  }
+  await setDoc(doc(db, "users", user.uid), {
+    name,
+    email,
+    mobile,
+    createdAt: new Date(),
+    authType: "email"
+  });
 
-  try {
-    const userCred = await createUserWithEmailAndPassword(auth, email, password);
-    const user = userCred.user;
+  return user;
+}
 
-    await setDoc(doc(db, "users", user.uid), {
-      name,
-      email,
-      mobile,
-      createdAt: new Date(),
-      authType: "email"
-    });
+// ---------------- LOGIN ----------------
+export async function login(email, password) {
+  if (!email || !password) throw new Error("Email and password are required");
 
-    alert("Account Created Successfully!");
-    window.location.href = "login.html";
+  const userCred = await signInWithEmailAndPassword(auth, email, password);
+  return userCred.user;
+}
 
-  } catch (error) {
-    alert("Signup Failed: " + error.message);
-  }
-};
+// ---------------- GOOGLE LOGIN ----------------
+export async function googleLogin() {
+  const result = await signInWithPopup(auth, provider);
+  const user = result.user;
 
+  await setDoc(doc(db, "users", user.uid), {
+    name: user.displayName,
+    email: user.email,
+    photoURL: user.photoURL || null,
+    googleAuth: true,
+    lastLogin: new Date()
+  }, { merge: true });
 
-// ----------------------------------------------------
-//                  LOGIN FUNCTION
-// ----------------------------------------------------
-window.login = async function () {
-  const email = document.getElementById("loginEmail").value.trim();
-  const password = document.getElementById("loginPassword").value.trim();
+  return user;
+}
 
-  if (!email || !password) {
-    alert("Please enter email and password!");
-    return;
-  }
+// ---------------- LOGOUT ----------------
+export async function logout() {
+  await signOut(auth);
+}
 
-  try {
-    await signInWithEmailAndPassword(auth, email, password);
-    alert("Login Successful!");
-    window.location.href = "homepage.html";   
-  } catch (error) {
-    alert("Login Failed: " + error.code + " - " + error.message);
-  }
-};
+// ---------------- AUTH STATE ----------------
+export function checkAuthStatus(callback) {
+  onAuthStateChanged(auth, user => {
+    callback(user);
+  });
+}
 
+// ---------------- CURRENT USER ----------------
+export function getCurrentUser() {
+  return auth.currentUser;
+}
 
-// ----------------------------------------------------
-//                 GOOGLE LOGIN (Both pages)
-// ----------------------------------------------------
-window.googleLogin = async function () {
-  try {
-    const result = await signInWithPopup(auth, provider);
-    const user = result.user;
+// ---------------- FIRESTORE WORKOUTS & GOALS ----------------
+export async function saveWorkout(userId, workout) {
+  if (!userId) throw new Error("User ID required");
+  const docRef = await addDoc(collection(db, "users", userId, "workouts"), workout);
+  return docRef.id;
+}
 
-    await setDoc(
-      doc(db, "users", user.uid),
-      {
-        name: user.displayName,
-        email: user.email,
-        googleAuth: true,
-        createdAt: new Date()
-      },
-      { merge: true }
-    );
+export async function saveGoal(userId, goal) {
+  if (!userId) throw new Error("User ID required");
+  const docRef = await addDoc(collection(db, "users", userId, "goals"), goal);
+  return docRef.id;
+}
 
-    alert("Welcome " + user.displayName + "!");
-    window.location.href = "homepage.html"; // Redirect after success
+export async function getWorkouts(userId) {
+  if (!userId) throw new Error("User ID required");
+  const q = query(collection(db, "users", userId, "workouts"));
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+}
 
-  } catch (error) {
-    alert("Google Sign-in Failed: " + error.message);
-  }
-};
+export async function getGoals(userId) {
+  if (!userId) throw new Error("User ID required");
+  const q = query(collection(db, "users", userId, "goals"));
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+}
+
+// ---------------- AUTH OBSERVER ----------------
+checkAuthStatus(user => {
+  if (user) console.log("User signed in:", user.email);
+  else console.log("No user signed in");
+});
