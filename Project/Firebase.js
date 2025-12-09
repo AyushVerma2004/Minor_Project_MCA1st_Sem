@@ -126,6 +126,7 @@ window.googleLogin = async function () {
       lastLogin: new Date()
     }, { merge: true });
 
+
     // --- CORRECTION APPLIED HERE ---
     // The previous onAuthStateChanged listener was removed.
     // We now redirect directly as signInWithPopup guarantees the user is logged in.
